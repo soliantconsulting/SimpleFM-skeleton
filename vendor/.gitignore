@@ -1,0 +1,7 @@
+!.gitignore
+.composer
+composer
+zendframework
+soliantconsulting
+doctrine
+autoload.php

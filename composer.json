@@ -1,0 +1,16 @@
+{
+    "name": "soliantconsulting/simplefm-fmserver-sample",
+    "type": "library",
+    "description": "This application demonstrates use of the SimpleFM\\ZF2 package as the Model layer of a Zend Framework 2 MVC application, using the FMServer_Sample database as a data provider.",
+    "keywords": ["FileMaker", "adapter", "framework", "ZF2"],
+    "homepage": "http://github.com/soliantconsulting/SimpleFM_FMServer_Sample",
+    "license": "MIT",
+    "authors": [
+        {"name": "Jeremiah Small", "email": "jsmall@soliantconsulting.com"}
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "soliantconsulting/simplefm": "dev-master",
+        "zendframework/zendframework": "dev-master"
+    }
+}

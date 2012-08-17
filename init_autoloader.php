@@ -1,27 +1,40 @@
 <?php
+/**
+* Zend Framework (http://framework.zend.com/)
+*
+* @link http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
+* @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
+* @license http://framework.zend.com/license/new-bsd New BSD License
+*/
 
 /**
- * This autoloading setup is a simplified version of the one the ships with the ZendSkeletonApplication
- * @author jsmall@soliantconsulting.com
- */
+* This autoloading setup is really more complicated than it needs to be for most
+* applications. The added complexity is simply to reduce the time it takes for
+* new developers to be productive with a fresh skeleton. It allows autoloading
+* to be correctly configured, regardless of the installation method and keeps
+* the use of composer completely optional. This setup should work fine for
+* most users, however, feel free to configure autoloading however you'd like.
+*/
 
-include 'vendor/soliantconsulting/SimpleFM/library/Soliant/SimpleFM/Adapter.php';
-include 'vendor/soliantconsulting/SimpleFM/library/Soliant/SimpleFM/Version.php';
-include 'vendor/soliantconsulting/SimpleFM/library/Soliant/SimpleFM/Exception/ExceptionInterface.php';
-include 'vendor/soliantconsulting/SimpleFM/library/Soliant/SimpleFM/Exception/ErrorException.php';
-include 'vendor/soliantconsulting/SimpleFM/library/Soliant/SimpleFM/Exception/FileMakerException.php';
-include 'vendor/soliantconsulting/SimpleFM/library/Soliant/SimpleFM/Exception/HttpException.php';
-include 'vendor/soliantconsulting/SimpleFM/library/Soliant/SimpleFM/Exception/XmlException.php';
-include 'vendor/soliantconsulting/SimpleFM/library/Soliant/SimpleFM/ZF2/Entity/EntityInterface.php';
-include 'vendor/soliantconsulting/SimpleFM/library/Soliant/SimpleFM/ZF2/Entity/SerializableEntityInterface.php';
-include 'vendor/soliantconsulting/SimpleFM/library/Soliant/SimpleFM/ZF2/Entity/AbstractEntity.php';
-include 'vendor/soliantconsulting/SimpleFM/library/Soliant/SimpleFM/ZF2/Gateway/AbstractGateway.php';
-include 'vendor/doctrine/common/lib/Doctrine/Common/Collections/Collection.php';
-include 'vendor/doctrine/common/lib/Doctrine/Common/Collections/Selectable.php';
-include 'vendor/doctrine/common/lib/Doctrine/Common/Collections/ArrayCollection.php';
-include 'vendor/zendframework/library/Zend/Loader/AutoloaderFactory.php';
-Zend\Loader\AutoloaderFactory::factory(array(
-    'Zend\Loader\StandardAutoloader' => array(
-        'autoregister_zf' => true
-    )
-));
+// Composer autoloading
+if (file_exists('vendor/autoload.php')) {
+    $loader = include 'vendor/autoload.php';
+}
+
+// Support for ZF2_PATH environment variable or git submodule
+if (($zf2Path = getenv('ZF2_PATH') ?: (is_dir('vendor/ZF2/library') ? 'vendor/ZF2/library' : false)) !== false) {
+    if (isset($loader)) {
+        $loader->add('Zend', $zf2Path . '/Zend');
+    } else {
+        include $zf2Path . '/Zend/Loader/AutoloaderFactory.php';
+        Zend\Loader\AutoloaderFactory::factory(array(
+            'Zend\Loader\StandardAutoloader' => array(
+                'autoregister_zf' => true
+            )
+        ));
+    }
+}
+
+if (!class_exists('Zend\Loader\AutoloaderFactory')) {
+    throw new RuntimeException('Unable to load ZF2. Run `php composer.phar install` or define a ZF2_PATH environment variable.');
+}
