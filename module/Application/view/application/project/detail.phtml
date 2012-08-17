@@ -1,0 +1,44 @@
+<div class="row">
+    <div class="span4">
+        <h2>Project</h2>
+        <h3><?= $this->project->getName(); ?></h3>
+        <dl>
+            <dt>Description</dt>
+                <dd><?= $this->project->getDescription(); ?></dd>
+            <dt>Tag</dt>
+                <dd><?= $this->project->getTag(); ?></dd>
+            <dt>Status on Screen</dt>
+                <dd><?= $this->project->getStatusOnScreen(); ?></dd>
+        </dl>
+    </div>
+    <div class="span3">
+        <dl>
+            <dt>Start Date</dt>
+                <dd><?= $this->project->getStartDate(); ?></dd>
+            <dt>Due Date</dt>
+                <dd><?= $this->project->getDueDate(); ?></dd>
+            <dt>Days Remaining</dt>
+                <dd><?= $this->project->getDaysRemaining(); ?></dd>
+            <dt>Days Elapsed</dt>
+                <dd><?= $this->project->getDaysElapsed(); ?></dd>
+            <dt>Created By</dt>
+                <dd><?= $this->project->getCreatedBy(); ?></dd>
+        </dl>
+    </div>
+    <div class="span5">
+        <h3><?= $this->project->getName(); ?> Tasks</h3>
+        <table>
+            <?php 
+                foreach ($this->project->getTasks() as $task){
+                    echo '<tr><td><a href="/application/task/detail?recid=' . 
+                        $task->getRecid() . '">' . $task->getName() . '</a></td></tr>';
+                }
+            ?>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="span12">
+        <?php \Zend\Debug\Debug::dump($this->helloWorld, 'Hello World'); ?>
+    </div>
+</div>

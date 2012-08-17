@@ -1,0 +1,13 @@
+<div class="row">
+    <div class="span12">
+        <h2>Tasks</h2>
+        <table>
+            <tr><th width="50px">Recid</th><th>Name</th></tr>
+            <?php 
+            foreach ($this->tasks as $task){
+                echo '<tr><td>' . $task->getRecid() . '</td><td><a href="/application/task/detail?recid=' . $task->getRecid() . '">' . $task->getName() . '</a></td></tr>';
+            }
+            ?>
+        </table>
+    </div>
+</div>

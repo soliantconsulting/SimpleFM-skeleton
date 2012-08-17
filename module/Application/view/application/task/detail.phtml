@@ -1,0 +1,50 @@
+<div class="row">
+    <div class="span3">
+        <h2><a href="/application/project/detail?recid=<?= $this->task->getProject()->getRecid();  ?>"><?= $this->task->getProject()->getName(); ?></a> Task</h2>
+        <h3><?= $this->task->getName(); ?></h3>
+        <dl>
+            <dt>Description</dt>
+                <dd><?= $this->task->getDescription(); ?></dd>
+            <dt>Tag</dt>
+                <dd><?= $this->task->getTag(); ?></dd>
+            <dt>Created By</dt>
+                <dd><?= $this->task->getCreatedBy(); ?></dd>
+        </dl>
+    </div>
+    <div class="span3">
+        <dl>
+            <dt>Status</dt>
+                <dd><?= $this->task->getStatusOnScreen(); ?></dd>
+            <dt>Status Number</dt>
+                <dd><?= $this->task->getStatus(); ?></dd>
+            <dt>Priority</dt>
+                <dd><?= $this->task->getPriorityOnScreen(); ?></dd>
+            <dt>Priority Number</dt>
+                <dd><?= $this->task->getPriority(); ?></dd>
+        </dl>
+    </div>
+    <div class="span3">
+        <dl>
+            <dt>Start Date</dt>
+                <dd><?= $this->task->getStartDate(); ?></dd>
+            <dt>Due Date</dt>
+                <dd><?= $this->task->getDueDate(); ?></dd>
+            <dt>Days Remaining</dt>
+                <dd><?= $this->task->getDaysRemaining(); ?></dd>
+            <dt>Days Elapsed</dt>
+                <dd><?= $this->task->getDaysElapsed(); ?></dd>
+            <dt>Percent Complete</dt>
+                <dd><?= $this->task->getTaskCompletionPercentage(); ?></dd>
+        </dl>
+    </div>
+    <div class="span3">
+        <dl>
+            <dt>Personnel Name</dt>
+                <dd><?= $this->task->getPersonnelName(); ?></dd>
+            <dt>Personnel Email</dt>
+                <dd><?= $this->task->getPersonnelEmail(); ?></dd>
+            <dt>Personnel Phone</dt>
+                <dd><?= $this->task->getPersonnelPhone(); ?></dd>
+        </dl>
+    </div>
+</div>
