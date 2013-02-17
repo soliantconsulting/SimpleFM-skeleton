@@ -5,7 +5,7 @@ This example application is pre-configured to assume that FileMaker Server 12 is
 
 When you have your FileMaker Server 12 host ready, upload FMServer_Sample_Web.fmp12 from this directory.
 
-See figure1.png in this directory and follow these steps:
+See figure 1 below and follow these steps:
 
 1. Select Databases and verify that Sample/FMServer_Sample is hosted.
 2. Click Upload
@@ -13,3 +13,5 @@ See figure1.png in this directory and follow these steps:
 4. Click Add Database
 5. Select FMServer_Sample_Web.fmp12 from this directory
 6. Click Select and verify that it opens without errors
+
+![image](figure1.png)
