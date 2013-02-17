@@ -12,18 +12,10 @@
  */
 
 return array(
-    'di' => array(
-        'instance' => array(
-            'simple_fm' => array(
-                'parameters' => array(
-                    'hostParams' => array(
-                        'hostname' => 'localhost',
-                        'dbname'   => 'FMServer_Sample_Web',
-                        'username' => 'Admin',
-                        'password' => ''
-                    ),
-                ),
-            ),
-        ),
+    'simple_fm_host_params' => array(
+        'hostname' => 'localhost',
+        'dbname'   => 'FMServer_Sample_Web',
+        'username' => 'Admin',
+        'password' => ''
     ),
 );
