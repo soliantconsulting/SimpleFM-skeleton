@@ -15,14 +15,12 @@ class Task extends TaskPointer implements SerializableEntityInterface
     /**
      * Fields
      */
-    protected $taskName;
     protected $description;
     protected $tag;
     
     /**
      * Read-only Fields
      */
-    protected $id;
     protected $startDate;
     protected $dueDate;
     protected $daysRemaining;
@@ -56,10 +54,8 @@ class Task extends TaskPointer implements SerializableEntityInterface
      */
     public function unserialize ($simpleFMAdapterRow = array())
     {
-        $this->recid                        = $simpleFMAdapterRow["recid"];
-        $this->modid                        = $simpleFMAdapterRow["modid"];
-        $this->id                           = $simpleFMAdapterRow["TASK ID MATCH FIELD"];
-        $this->taskName                     = $simpleFMAdapterRow["Task Name"];
+        parent::unserialize($simpleFMAdapterRow);
+        
         $this->description                  = $simpleFMAdapterRow["Description"];
         $this->tag                          = $simpleFMAdapterRow["Tag"];
         $this->startDate                    = $simpleFMAdapterRow["Start Date"];
@@ -98,22 +94,6 @@ class Task extends TaskPointer implements SerializableEntityInterface
         return $simpleFMAdapterRow;
     }
     
-    /**
-     * @see \Soliant\SimpleFM\ZF2\Entity\AbstractEntity::getName()
-     */
-    public function getName()
-    {
-        return $this->getTaskName();
-    }
-
-    /**
-     * @return the $taskName
-     */
-    public function getTaskName ()
-    {
-        return $this->taskName;
-    }
-
 	/**
      * @param field_type $taskName
      * @return \Application\Entity\Task
