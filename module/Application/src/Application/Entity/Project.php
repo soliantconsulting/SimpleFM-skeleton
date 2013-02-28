@@ -16,14 +16,12 @@ class Project extends ProjectPointer implements SerializableEntityInterface
     /**
      * Fields
      */
-    protected $projectName;
     protected $description;
     protected $tag;
     
     /**
      * Read-only Fields
      */
-    protected $id;
     protected $startDate;
     protected $dueDate;
     protected $daysRemaining;
@@ -46,10 +44,8 @@ class Project extends ProjectPointer implements SerializableEntityInterface
      */
     public function unserialize ($simpleFMAdapterRow = array())
     {
-        $this->recid                        = $simpleFMAdapterRow["recid"];
-        $this->modid                        = $simpleFMAdapterRow["modid"];
-        $this->id                           = $simpleFMAdapterRow["PROJECT ID MATCH FIELD"];
-        $this->projectName                  = $simpleFMAdapterRow["Project Name"];
+        parent::unserialize($simpleFMAdapterRow);
+        
         $this->description                  = $simpleFMAdapterRow["Description"];
         $this->tag                          = $simpleFMAdapterRow["Tag"];
         $this->startDate                    = $simpleFMAdapterRow["Start Date"];
@@ -80,22 +76,6 @@ class Project extends ProjectPointer implements SerializableEntityInterface
         $simpleFMAdapterRow["Tag"]          = $this->getTag();
     
         return $simpleFMAdapterRow;
-    }
-
-    /**
-     * @see \Soliant\SimpleFM\ZF2\Entity\AbstractEntity::getName()
-     */
-    public function getName()
-    {
-        return $this->getProjectName();
-    }
-    
-	/**
-     * @return the $projectName
-     */
-    public function getProjectName ()
-    {
-        return $this->projectName;
     }
 
 	/**
