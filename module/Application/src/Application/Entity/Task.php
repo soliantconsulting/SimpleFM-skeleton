@@ -251,6 +251,11 @@ class Task extends TaskPointer implements SerializableEntityInterface
     {
         return $this->project;
     }
+    
+    public static function getLayoutName()
+    {
+    	return 'Task';
+    }
 
 }
 

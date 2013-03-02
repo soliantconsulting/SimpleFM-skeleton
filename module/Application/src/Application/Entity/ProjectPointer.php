@@ -48,28 +48,9 @@ class ProjectPointer extends AbstractEntity
         return $this;
     }
     
-    /**
-     * @see \Soliant\SimpleFM\ZF2\Entity\AbstractEntity::getControllerAlias()
-     */
-    function getControllerAlias()
+    public static function getLayoutName()
     {
-        return 'project';
-    }
-   
-    /**
-     * @see \Soliant\SimpleFM\ZF2\Entity\AbstractEntity::getEntityPointerName()
-     */
-    function getEntityPointerName()
-    {
-        return '\Application\Entity\ProjectPointer';
-    }
-
-    /**
-     * @see \Soliant\SimpleFM\ZF2\Entity\AbstractEntity::getEntityName()
-     */
-    function getEntityName()
-    {
-        return '\Application\Entity\Project';
+    	return 'ProjectPointer';
     }
 
 }

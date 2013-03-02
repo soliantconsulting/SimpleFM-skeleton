@@ -187,6 +187,11 @@ class Project extends ProjectPointer implements SerializableEntityInterface
     {
         return $this->tasks;
     }
+    
+    public static function getLayoutName()
+    {
+    	return 'Project';
+    }
 
     
     

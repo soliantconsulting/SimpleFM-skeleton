@@ -23,6 +23,7 @@ class ProjectController extends AbstractActionController
     public function detailAction()
     {
         $gatewayProject = $this->getServiceLocator()->get('gateway_project');
+        $gatewayProject = $gatewayProject->setEntityName('\Application\Entity\Project');
         
         $recid = $this->getRequest()->getQuery()->get('recid');
         

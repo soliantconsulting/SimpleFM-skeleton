@@ -53,28 +53,9 @@ class TaskPointer extends AbstractEntity
         return $this;
     }
     
-    /**
-     * @see \Soliant\SimpleFM\ZF2\Entity\AbstractEntity::getControllerAlias()
-     */
-    function getControllerAlias()
+    public static function getLayoutName()
     {
-        return 'task';
-    }
-
-    /**
-     * @see \Soliant\SimpleFM\ZF2\Entity\AbstractEntity::getEntityPointerName()
-     */
-    function getEntityPointerName()
-    {
-        return '\Application\Entity\TaskPointer';
-    }
-     
-    /**
-     * @see \Soliant\SimpleFM\ZF2\Entity\AbstractEntity::getEntityName()
-     */
-    function getEntityName()
-    {
-        return '\Application\Entity\Task';
+    	return 'TaskPointer';
     }
 
 }
