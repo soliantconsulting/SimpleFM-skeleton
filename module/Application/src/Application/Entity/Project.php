@@ -42,7 +42,7 @@ class Project extends AbstractEntity
     
     /**
      * @param array $simpleFMAdapterRow
-     * @see \Soliant\SimpleFM\ZF2\Entity\EntityInterface::unserialize()
+     * @see \Soliant\SimpleFM\ZF2\Entity\AbstractEntity::unserialize()
      */
     public function unserialize()
     {
@@ -69,7 +69,7 @@ class Project extends AbstractEntity
     }
     
     /**
-     * @see \Soliant\SimpleFM\ZF2\Entity\EntityInterface::serialize()
+     * @see \Soliant\SimpleFM\ZF2\Entity\AbstractEntity::serialize()
      * @return the $simpleFMAdapterRow
      */
     public function serialize()

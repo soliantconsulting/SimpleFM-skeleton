@@ -53,7 +53,7 @@ class Task extends AbstractEntity
     
     /**
      * @param array $simpleFMAdapterRow
-     * @see \Soliant\SimpleFM\ZF2\Entity\EntityInterface::unserialize()
+     * @see \Soliant\SimpleFM\ZF2\Entity\AbstractEntity::unserialize()
      */
     public function unserialize()
     {
@@ -85,7 +85,7 @@ class Task extends AbstractEntity
     }
     
     /**
-     * @see \Soliant\SimpleFM\ZF2\Entity\EntityInterface::serialize()
+     * @see \Soliant\SimpleFM\ZF2\Entity\AbstractEntity::serialize()
      */
     public function serialize()
     {
