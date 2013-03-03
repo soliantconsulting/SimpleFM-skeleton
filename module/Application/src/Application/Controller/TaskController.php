@@ -14,6 +14,7 @@ class TaskController extends AbstractActionController
     public function indexAction()
     {
         $gatewayTask = $this->getServiceLocator()->get('gateway_task');
+        $gatewayTask->setEntityLayout('TaskPointer');
     
         $tasks = $gatewayTask->findAll();
         
