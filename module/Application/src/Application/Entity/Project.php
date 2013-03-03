@@ -14,7 +14,7 @@ class Project extends AbstractEntity
 {
     
     /**
-     * Fields
+     * Writable Fields
      */
     protected $projectName;
     protected $description;
@@ -31,7 +31,9 @@ class Project extends AbstractEntity
     protected $statusOnScreen;
     protected $createdBy;
 
-    // Child Associations
+    /**
+     * Child Associations
+     */
     protected $tasks;
 
     public function __construct($simpleFMAdapterRow = array())
@@ -46,18 +48,19 @@ class Project extends AbstractEntity
      */
     public function unserialize()
     {
-        $this->mapFmFieldOntoProperty('recid', 'recid');
-        $this->mapFmFieldOntoProperty('modid', 'modid');
-        $this->mapFmFieldOntoProperty('id', 'PROJECT ID MATCH FIELD');
-        $this->mapFmFieldOntoProperty('projectName', 'Project Name');
-        $this->mapFmFieldOntoProperty('description', 'Description');
-        $this->mapFmFieldOntoProperty('tag', 'Tag');
-        $this->mapFmFieldOntoProperty('startDate', 'Start Date');
-        $this->mapFmFieldOntoProperty('dueDate', 'Due Date');
-        $this->mapFmFieldOntoProperty('daysRemaining', 'Days Remaining');
-        $this->mapFmFieldOntoProperty('daysElapsed', 'Days Elapsed');
-        $this->mapFmFieldOntoProperty('statusOnScreen', 'Status on Screen');
-        $this->mapFmFieldOntoProperty('createdBy', 'Created By');
+        $this->unserializeField('recid', 'recid');
+        $this->unserializeField('modid', 'modid');
+        $this->unserializeField('projectName', 'Project Name', TRUE);
+        $this->unserializeField('description', 'Description', TRUE);
+        $this->unserializeField('tag', 'Tag', TRUE);
+        
+        $this->unserializeField('id', 'PROJECT ID MATCH FIELD');
+        $this->unserializeField('startDate', 'Start Date');
+        $this->unserializeField('dueDate', 'Due Date');
+        $this->unserializeField('daysRemaining', 'Days Remaining');
+        $this->unserializeField('daysElapsed', 'Days Elapsed');
+        $this->unserializeField('statusOnScreen', 'Status on Screen');
+        $this->unserializeField('createdBy', 'Created By');
         
         if (!empty($this->simpleFMAdapterRow["Tasks"]["rows"])){
             foreach ($this->simpleFMAdapterRow["Tasks"]["rows"] as $row){
@@ -76,11 +79,11 @@ class Project extends AbstractEntity
     {
         $this->simpleFMAdapterRow = array();
         
-        $this->mapPropertyOntoFmField('-recid', 'getRecid');
-        $this->mapPropertyOntoFmField('-modid', 'getModid');
-        $this->mapPropertyOntoFmField('Project Name', 'getProjectName');
-        $this->mapPropertyOntoFmField('Description', 'getDescription');
-        $this->mapPropertyOntoFmField('Tag', 'getTag');
+        $this->serializeField('-recid', 'getRecid');
+        $this->serializeField('-modid', 'getModid');
+        $this->serializeField('Project Name', 'getProjectName');
+        $this->serializeField('Description', 'getDescription');
+        $this->serializeField('Tag', 'getTag');
     
         return $this->simpleFMAdapterRow;
     }

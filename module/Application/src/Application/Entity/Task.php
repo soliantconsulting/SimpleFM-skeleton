@@ -14,7 +14,7 @@ class Task extends AbstractEntity
 {
     
     /**
-     * Fields
+     * Writable Fields
      */
     protected $taskName;
     protected $description;
@@ -57,25 +57,26 @@ class Task extends AbstractEntity
      */
     public function unserialize()
     {
-        $this->mapFmFieldOntoProperty('recid', 'recid');
-        $this->mapFmFieldOntoProperty('modid', 'modid');
-        $this->mapFmFieldOntoProperty('id', 'TASK ID MATCH FIELD');
-        $this->mapFmFieldOntoProperty('taskName', 'Task Name');
-        $this->mapFmFieldOntoProperty('description', 'Description');
-        $this->mapFmFieldOntoProperty('tag', 'Tag');
-        $this->mapFmFieldOntoProperty('startDate', 'Start Date');
-        $this->mapFmFieldOntoProperty('dueDate', 'Due Date');
-        $this->mapFmFieldOntoProperty('daysRemaining', 'Days Remaining');
-        $this->mapFmFieldOntoProperty('daysElapsed', 'Days Elapsed');
-        $this->mapFmFieldOntoProperty('status', 'Status');
-        $this->mapFmFieldOntoProperty('statusOnScreen', 'Status on Screen');
-        $this->mapFmFieldOntoProperty('priority', 'Priority Number List');
-        $this->mapFmFieldOntoProperty('priorityOnScreen', 'Priority on Screen');
-        $this->mapFmFieldOntoProperty('taskCompletionPercentage', 'Task Completion Percentage');
-        $this->mapFmFieldOntoProperty('createdBy', 'Created By');
-        $this->mapFmFieldOntoProperty('personnelName', 'PERSONNEL NAME MATCH FIELD');
-        $this->mapFmFieldOntoProperty('personnelEmail', 'Personnel::Email');
-        $this->mapFmFieldOntoProperty('personnelPhone', 'Personnel::Phone');
+        $this->unserializeField('recid', 'recid');
+        $this->unserializeField('modid', 'modid');
+        $this->unserializeField('taskName', 'Task Name', TRUE);
+        $this->unserializeField('description', 'Description', TRUE);
+        $this->unserializeField('tag', 'Tag', TRUE);
+
+        $this->unserializeField('id', 'TASK ID MATCH FIELD');
+        $this->unserializeField('startDate', 'Start Date');
+        $this->unserializeField('dueDate', 'Due Date');
+        $this->unserializeField('daysRemaining', 'Days Remaining');
+        $this->unserializeField('daysElapsed', 'Days Elapsed');
+        $this->unserializeField('status', 'Status');
+        $this->unserializeField('statusOnScreen', 'Status on Screen');
+        $this->unserializeField('priority', 'Priority Number List');
+        $this->unserializeField('priorityOnScreen', 'Priority on Screen');
+        $this->unserializeField('taskCompletionPercentage', 'Task Completion Percentage');
+        $this->unserializeField('createdBy', 'Created By');
+        $this->unserializeField('personnelName', 'PERSONNEL NAME MATCH FIELD');
+        $this->unserializeField('personnelEmail', 'Personnel::Email');
+        $this->unserializeField('personnelPhone', 'Personnel::Phone');
         
         if (!empty($this->simpleFMAdapterRow["Projects"]["rows"])){
             $this->project = new Project($this->simpleFMAdapterRow["Projects"]["rows"][0]);
@@ -91,11 +92,11 @@ class Task extends AbstractEntity
     {
         $this->simpleFMAdapterRow = array();
         
-        $this->mapPropertyOntoFmField('-recid', 'getRecid');
-        $this->mapPropertyOntoFmField('-modid', 'getModid');
-        $this->mapPropertyOntoFmField('Task Name', 'getTaskName');
-        $this->mapPropertyOntoFmField('Description', 'getDescription');
-        $this->mapPropertyOntoFmField('Tag', 'getTag');
+        $this->serializeField('-recid', 'getRecid');
+        $this->serializeField('-modid', 'getModid');
+        $this->serializeField('Task Name', 'getTaskName');
+        $this->serializeField('Description', 'getDescription');
+        $this->serializeField('Tag', 'getTag');
     
         return $this->simpleFMAdapterRow;
     }
