@@ -2,11 +2,11 @@
 
 ## About
 
-This application demonstrates use of the SimpleFM\ZF2 package as the Model layer of a Zend Framework 2 MVC application, using the FileMaker Server 12 FMServer_Sample database as a data provider.
+This application demonstrates use of the [SimpleFM][10]\ZF2 package as the Model layer of a Zend Framework 2 MVC application, using the FileMaker Server 12 FMServer_Sample database as a data provider.
 
 ## System Requirements
 
-SimpleFM, the examples and this documentation are tailored for PHP 5.3 and FileMaker Sever 12
+[SimpleFM][10], the examples and this documentation are tailored for PHP 5.3 and FileMaker Sever 12
 
 * PHP 5.3+
 * FileMaker Server 12+
@@ -52,7 +52,7 @@ In a Web application that will use the FileMaker XML API, the architect needs to
 
 #### Domain Objects (Entity)
 
-Generally you will define one Entity per FileMaker table, but the FileMaker XML API does not give us direct access to tables. Instead we use Layouts in a manner roughly analogous to SQL views and, properly used, they can be used as gateways to the domain model in FileMaker. For example, consider Project and Task from FMServer_Sample:
+Generally you will define one Entity per FileMaker table, but the FileMaker XML API does not give us direct access to tables. Instead we use Layouts in a manner roughly analogous to SQL views and, properly used, they can be used as Gateways to the domain model in FileMaker. For example, consider Project and Task from FMServer_Sample:
 
     class Project
     {
@@ -82,63 +82,41 @@ Generally you will define one Entity per FileMaker table, but the FileMaker XML 
          *  getters and setters
          */
     }
-    
-#### Domain Object Pointers (EntityPointer)
-
-Data from all the fields included on a Filemaker Layout are always returned when the Layout is called by the API. As there is no programatic way to modify which columns are returned, short of changing Layouts. You don't want to be forced to eagerly load the whole object in all circumstances. It can be useful to maintain a discrete EntityPointer class which the Entity class extends. The EntityPointer defines the minimum properties required to identify an Entity, e.g. name, and primary key, and can be used when lazy loading is preferable. As the EntityPointer is an incomplete representation of the Entity, it must be treated as read-only, and the Table Data Gateway interface (see next section) requires a method for resolving the Entity from an EntityPointer.
-
-    class ProjectPointer
-    {
-        // The bare minimum Fields
-        protected $name;
-        
-        /**
-         *  getters
-         */
-    }
-    
-    class Project extends ProjectPointer
-    {
-        // The rest of the Fields
-        protected $description;
-        
-        // Associations
-        protected $tasks;
-        
-        /**
-         *  getters and setters
-         */
-    }
 
 #### Table Data Gateways (Gateway)
 
-Designate a FileMaker Layout for each Entity and a separate one for each EntityPointer in your PHP domain model. A Table Data Gateway class (hereafter just Gateway) links an Entity and EntityPointer to the Layout that each owns.
+Designate a FileMaker Layout for each Entity in your PHP domain model. A Table Data Gateway class (hereafter just Gateway) links an Entity to the Layout that each owns. Additional Layouts may be defined for an entity (see next section), but a minimum of one is required by the `AbstractEntity::getDefaultWriteLayoutName()` abstract static method.
 
-Example: given a *Person* table in FileMaker, define two Layouts for the PersonGateway: *PersonPointer* and *Person*
+Example: given a *Person* table in FileMaker, define a Layout for the PersonGateway: *Person*
 
-1. *PersonPointer* Layout: owned by *PersonPointer* Entity. Provides the minimum set of Person fields and no portals.
-2. *Person* Layout: owned by *Person* Entity. Provides a complete set of Person fields and portals for all domain model associations.
+    public static function getDefaultWriteLayoutName()
+    {
+    	return 'Project';
+    }
 
 > Table Data Gateway: An object that acts as a [Gateway][8] to a database table. One instance handles all the rows in the table. ([Fowler, PoEAA, TableDataGateway][6]).
 
-In the Project example shown below, additional library dependencies are assumed to be defined in Soliant\SimpleFM\ZF2\Gateway\AbstractGateway. The constructor requires an instance of Zend\ServiceManager, Soliant\SimpleFM\Adapter, Soliant\SimpleFM\ZF2\Entity\AbstractEntity, and a two FileMaker layoutnames, all configured via Di in module.config.php. AbstractGateway also requires Doctrine\Common\Collections\ArrayCollection. These dependencies and several helper methods are not shown in the example for clarity.
+In the Project example shown below, additional library dependencies are assumed to be defined in `Soliant\SimpleFM\ZF2\Gateway\AbstractGateway`. The constructor requires an instance of `Zend\ServiceManager`, `Soliant\SimpleFM\ZF2\Entity\AbstractEntity`, `Soliant\SimpleFM\Adapter`, injected via a factory closure in the service_manager section of module.config.php. `AbstractGateway` also uses `Doctrine\Common\Collections\ArrayCollection`. These dependencies and several helper methods are not shown in the example for clarity.
 
-In addition to the dependencies, AbstractGateway provides all the basic database interaction methods shown here. They are included as methods of Application\Gateway\Project to illustrate the main point of a Gateway. When you implement the domain model for a Gateway, use the methods provided by AbstractGateway as-is or override any of them with custom domain logic. And of course you can create any new methods needed to support your domain model. To point is to encapsulate the inner workings of the FileMaker API in your Gateway classes, and let your ZF2 application focus only on the OO methods it needs to work with Entities.
+In addition to the dependencies, `AbstractGateway` provides all the basic database interaction methods shown here. They are included as methods of `Application\Gateway\Project` to illustrate the main point of a Gateway. When you implement the domain model for a Gateway, use the methods provided by `AbstractGateway` as-is or override any of them with custom domain logic. And of course you can create any new methods needed to support your domain model. The point is to encapsulate the inner workings of the FileMaker API in your Gateway classes, and let your ZF2 application focus only on the OO methods it needs to work with Entities.
 
     <?php
     
     namespace Application\Gateway;
     
     use Soliant\SimpleFM\ZF2\AbstractGateway;
-    use Application\Entity\ProjectPointer;
-    use Application\Entity\Project as ProjectEntity;
+    use Application\Entity\Project;
 
     class Project extends AbstractGateway
     {
-
-        public function resolvePointer(EntityInterface $pointer){
-            return $this->find($pointer->getRecid());
-        }
+    
+	    public function resolveEntity(AbstractEntity $entity, $entityLayout=NULL)
+	    {
+	        if (!empty($entityLayout)){
+	            $this->setEntityLayout($entityLayout);
+	        }
+	        return $this->find($entity->getRecid());
+	    }
         
         public function find($recid)
         {
@@ -155,22 +133,35 @@ In addition to the dependencies, AbstractGateway provides all the basic database
             // Call FileMaker API via SimpleFMAdapter and unserialize as Project ArrayCollection
         }
         
-        public function create(ProjectEntity $entity)
+        public function create(Project $entity)
         {   
             // Call FileMaker API via SimpleFMAdapter and unserialize as Project entity
         }
         
-        public function edit(ProjectEntity $entity)
+        public function edit(Project $entity)
         {   
             // Call FileMaker API via SimpleFMAdapter and unserialize as Project entity
         }
         
-        public function delete(ProjectPointer $entity)
+        public function delete(Project $entity)
         {
             // Call FileMaker API via SimpleFMAdapter and return TRUE on success
         }
     }
 
+#### Optimizing Gateway Requests With Custom FileMaker Layouts
+
+Data from all the fields included on a Filemaker Layout are always returned when the Layout is called by the API. As there is no programatic way to modify which columns are returned, short of changing Layouts. You don't want to be forced to eagerly load the whole object in all circumstances. It can be useful to maintain one or more alternate layouts that are sub or super sets of the default fields that comprise an Entity class. For example you might define an EntityPointer Layout which contains the minimum properties required to identify an Entity, e.g. name, and primary key, and can be used when lazy loading is preferable. As the EntityPointer is an incomplete representation of the Entity, any instance retrieved with it must be treated as read-only, and the AbstractGateway (see previous section) provides a method for resolving the Entity from a non-standard Layout resonse. For instance, if you specify the EntityPointer Layout to generate a list view, you can pass an Entity instance from that collection to the resolveEntity() method on the EntityGateway, and it will make a request for that entity and return it with a complete field set:
+
+        // retrieve the gateway and specify a stripped down Pointer layout
+        $gatewayProject = $this->getServiceLocator()->get('gateway_project');
+        $gatewayProject->setEntityLayout('ProjectPointer');
+        
+        // execute the request
+        $projects = $gatewayProject->findAll();
+        
+        // pick one of the result records and "inflate" just that record with a second request
+        $fullProject = $gatewayProject->resolveEntity($projects[500][recid], 'Project');
 
 [1]: http://www.soliantconsulting.com
 [2]: http://www.filemaker.com/products/filemaker-server/
@@ -179,3 +170,4 @@ In addition to the dependencies, AbstractGateway provides all the basic database
 [6]: http://martinfowler.com/eaaCatalog/tableDataGateway.html
 [8]: http://martinfowler.com/eaaCatalog/gateway.html
 [9]: http://getcomposer.org
+[10]: https://github.com/soliantconsulting/SimpleFM

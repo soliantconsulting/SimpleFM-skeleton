@@ -92,16 +92,12 @@ return array(
                     'gateway_project' => function ($sm) {
                         $entity = new \Application\Entity\Project();
                         $simpleFMAdapter = $sm->get('simple_fm');
-                        $layoutnamePointer = 'ProjectPointer';
-                        $layoutname = 'Project';
-                        return new \Application\Gateway\Project($sm, $entity, $simpleFMAdapter, $layoutnamePointer, $layoutname);
+                        return new \Application\Gateway\Project($sm, $entity, $simpleFMAdapter);
                     },
                     'gateway_task' => function ($sm) {
                         $entity = new \Application\Entity\Task();
                         $simpleFMAdapter = $sm->get('simple_fm');
-                        $layoutnamePointer = 'TaskPointer';
-                        $layoutname = 'Task';
-                        return new \Application\Gateway\Task($sm, $entity, $simpleFMAdapter, $layoutnamePointer, $layoutname);
+                        return new \Application\Gateway\Task($sm, $entity, $simpleFMAdapter);
                     },
                     
                     

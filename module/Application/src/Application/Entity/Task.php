@@ -6,21 +6,24 @@
 
 namespace Application\Entity;
 
-use Soliant\SimpleFM\ZF2\Entity\SerializableEntityInterface;
+use Soliant\SimpleFM\ZF2\Entity\AbstractEntity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Application\Entity\Task;
 
-class Task extends TaskPointer implements SerializableEntityInterface
+class Task extends AbstractEntity
 {
+    
     /**
-     * Fields
+     * Writable Fields
      */
+    protected $taskName;
     protected $description;
     protected $tag;
     
     /**
      * Read-only Fields
      */
+    protected $id;
     protected $startDate;
     protected $dueDate;
     protected $daysRemaining;
@@ -36,7 +39,7 @@ class Task extends TaskPointer implements SerializableEntityInterface
     protected $createdBy;
 
     /**
-     * Parent Pointers
+     * Parent Associations
      */
     protected $project;
 
@@ -50,48 +53,67 @@ class Task extends TaskPointer implements SerializableEntityInterface
     
     /**
      * @param array $simpleFMAdapterRow
-     * @see \Soliant\SimpleFM\ZF2\Entity\Serializable::unserialize()
+     * @see \Soliant\SimpleFM\ZF2\Entity\AbstractEntity::unserialize()
      */
-    public function unserialize ($simpleFMAdapterRow = array())
+    public function unserialize()
     {
-        parent::unserialize($simpleFMAdapterRow);
-        
-        $this->description                  = $simpleFMAdapterRow["Description"];
-        $this->tag                          = $simpleFMAdapterRow["Tag"];
-        $this->startDate                    = $simpleFMAdapterRow["Start Date"];
-        $this->dueDate                      = $simpleFMAdapterRow["Due Date"];
-        $this->daysRemaining                = $simpleFMAdapterRow["Days Remaining"];
-        $this->daysElapsed                  = $simpleFMAdapterRow["Days Elapsed"];
-        $this->status                       = $simpleFMAdapterRow["Status"];
-        $this->statusOnScreen               = $simpleFMAdapterRow["Status on Screen"];
-        $this->priority                     = $simpleFMAdapterRow["Priority Number List"];
-        $this->priorityOnScreen             = $simpleFMAdapterRow["Priority on Screen"];
-        $this->taskCompletionPercentage     = $simpleFMAdapterRow["Task Completion Percentage"];
-        $this->createdBy                    = $simpleFMAdapterRow["Created By"];
+        $this->unserializeField('recid', 'recid');
+        $this->unserializeField('modid', 'modid');
+        $this->unserializeField('taskName', 'Task Name', TRUE);
+        $this->unserializeField('description', 'Description', TRUE);
+        $this->unserializeField('tag', 'Tag', TRUE);
 
-        $this->personnelName                = $simpleFMAdapterRow["PERSONNEL NAME MATCH FIELD"];
-        $this->personnelEmail               = $simpleFMAdapterRow["Personnel::Email"];
-        $this->personnelPhone               = $simpleFMAdapterRow["Personnel::Phone"];
-    
-        if (!empty($simpleFMAdapterRow["Projects"]["rows"])){
-            $this->project = new ProjectPointer($simpleFMAdapterRow["Projects"]["rows"][0]);
+        $this->unserializeField('id', 'TASK ID MATCH FIELD');
+        $this->unserializeField('startDate', 'Start Date');
+        $this->unserializeField('dueDate', 'Due Date');
+        $this->unserializeField('daysRemaining', 'Days Remaining');
+        $this->unserializeField('daysElapsed', 'Days Elapsed');
+        $this->unserializeField('status', 'Status');
+        $this->unserializeField('statusOnScreen', 'Status on Screen');
+        $this->unserializeField('priority', 'Priority Number List');
+        $this->unserializeField('priorityOnScreen', 'Priority on Screen');
+        $this->unserializeField('taskCompletionPercentage', 'Task Completion Percentage');
+        $this->unserializeField('createdBy', 'Created By');
+        $this->unserializeField('personnelName', 'PERSONNEL NAME MATCH FIELD');
+        $this->unserializeField('personnelEmail', 'Personnel::Email');
+        $this->unserializeField('personnelPhone', 'Personnel::Phone');
+        
+        if (!empty($this->simpleFMAdapterRow["Projects"]["rows"])){
+            $this->project = new Project($this->simpleFMAdapterRow["Projects"]["rows"][0]);
         }
         
         return $this;
     }
     
     /**
-     * @see \Soliant\SimpleFM\ZF2\Entity\Serializable::serialize()
+     * @see \Soliant\SimpleFM\ZF2\Entity\AbstractEntity::serialize()
      */
     public function serialize()
     {
-        $simpleFMAdapterRow["-recid"]       = $this->getRecid();
-        $simpleFMAdapterRow["-modid"]       = $this->getModid();
-        $simpleFMAdapterRow["Task Name"]    = $this->getTaskName();
-        $simpleFMAdapterRow["Description"]  = $this->getDescription();
-        $simpleFMAdapterRow["Tag"]          = $this->getTag();
+        $this->simpleFMAdapterRow = array();
+        
+        $this->serializeField('-recid', 'getRecid');
+        $this->serializeField('-modid', 'getModid');
+        $this->serializeField('Task Name', 'getTaskName');
+        $this->serializeField('Description', 'getDescription');
+        $this->serializeField('Tag', 'getTag');
     
-        return $simpleFMAdapterRow;
+        return $this->simpleFMAdapterRow;
+    }
+
+    /**
+     * @see \Soliant\SimpleFM\ZF2\Entity\AbstractEntity::getName()
+     */
+    public function getName(){
+        return $this->getTaskName();
+    }
+
+	/**
+     * @return the $taskName
+     */
+    public function getTaskName ()
+    {
+        return $this->taskName;
     }
     
 	/**
@@ -250,6 +272,11 @@ class Task extends TaskPointer implements SerializableEntityInterface
     public function getProject ()
     {
         return $this->project;
+    }
+    
+    public static function getDefaultWriteLayoutName()
+    {
+    	return 'Task';
     }
 
 }
