@@ -6,21 +6,24 @@
 
 namespace Application\Entity;
 
-use Soliant\SimpleFM\ZF2\Entity\SerializableEntityInterface;
+use Soliant\SimpleFM\ZF2\Entity\AbstractEntity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Application\Entity\Task;
 
-class Task extends TaskPointer implements SerializableEntityInterface
+class Task extends AbstractEntity
 {
+    
     /**
      * Fields
      */
+    protected $taskName;
     protected $description;
     protected $tag;
     
     /**
      * Read-only Fields
      */
+    protected $id;
     protected $startDate;
     protected $dueDate;
     protected $daysRemaining;
@@ -36,7 +39,7 @@ class Task extends TaskPointer implements SerializableEntityInterface
     protected $createdBy;
 
     /**
-     * Parent Pointers
+     * Parent Associations
      */
     protected $project;
 
@@ -50,48 +53,66 @@ class Task extends TaskPointer implements SerializableEntityInterface
     
     /**
      * @param array $simpleFMAdapterRow
-     * @see \Soliant\SimpleFM\ZF2\Entity\Serializable::unserialize()
+     * @see \Soliant\SimpleFM\ZF2\Entity\EntityInterface::unserialize()
      */
-    public function unserialize ($simpleFMAdapterRow = array())
+    public function unserialize()
     {
-        parent::unserialize($simpleFMAdapterRow);
+        $this->mapFmFieldOntoProperty('recid', 'recid');
+        $this->mapFmFieldOntoProperty('modid', 'modid');
+        $this->mapFmFieldOntoProperty('id', 'TASK ID MATCH FIELD');
+        $this->mapFmFieldOntoProperty('taskName', 'Task Name');
+        $this->mapFmFieldOntoProperty('description', 'Description');
+        $this->mapFmFieldOntoProperty('tag', 'Tag');
+        $this->mapFmFieldOntoProperty('startDate', 'Start Date');
+        $this->mapFmFieldOntoProperty('dueDate', 'Due Date');
+        $this->mapFmFieldOntoProperty('daysRemaining', 'Days Remaining');
+        $this->mapFmFieldOntoProperty('daysElapsed', 'Days Elapsed');
+        $this->mapFmFieldOntoProperty('status', 'Status');
+        $this->mapFmFieldOntoProperty('statusOnScreen', 'Status on Screen');
+        $this->mapFmFieldOntoProperty('priority', 'Priority Number List');
+        $this->mapFmFieldOntoProperty('priorityOnScreen', 'Priority on Screen');
+        $this->mapFmFieldOntoProperty('taskCompletionPercentage', 'Task Completion Percentage');
+        $this->mapFmFieldOntoProperty('createdBy', 'Created By');
+        $this->mapFmFieldOntoProperty('personnelName', 'PERSONNEL NAME MATCH FIELD');
+        $this->mapFmFieldOntoProperty('personnelEmail', 'Personnel::Email');
+        $this->mapFmFieldOntoProperty('personnelPhone', 'Personnel::Phone');
         
-        $this->description                  = $simpleFMAdapterRow["Description"];
-        $this->tag                          = $simpleFMAdapterRow["Tag"];
-        $this->startDate                    = $simpleFMAdapterRow["Start Date"];
-        $this->dueDate                      = $simpleFMAdapterRow["Due Date"];
-        $this->daysRemaining                = $simpleFMAdapterRow["Days Remaining"];
-        $this->daysElapsed                  = $simpleFMAdapterRow["Days Elapsed"];
-        $this->status                       = $simpleFMAdapterRow["Status"];
-        $this->statusOnScreen               = $simpleFMAdapterRow["Status on Screen"];
-        $this->priority                     = $simpleFMAdapterRow["Priority Number List"];
-        $this->priorityOnScreen             = $simpleFMAdapterRow["Priority on Screen"];
-        $this->taskCompletionPercentage     = $simpleFMAdapterRow["Task Completion Percentage"];
-        $this->createdBy                    = $simpleFMAdapterRow["Created By"];
-
-        $this->personnelName                = $simpleFMAdapterRow["PERSONNEL NAME MATCH FIELD"];
-        $this->personnelEmail               = $simpleFMAdapterRow["Personnel::Email"];
-        $this->personnelPhone               = $simpleFMAdapterRow["Personnel::Phone"];
-    
-        if (!empty($simpleFMAdapterRow["Projects"]["rows"])){
-            $this->project = new ProjectPointer($simpleFMAdapterRow["Projects"]["rows"][0]);
+        if (!empty($this->simpleFMAdapterRow["Projects"]["rows"])){
+            $this->project = new Project($this->simpleFMAdapterRow["Projects"]["rows"][0]);
         }
         
         return $this;
     }
     
     /**
-     * @see \Soliant\SimpleFM\ZF2\Entity\Serializable::serialize()
+     * @see \Soliant\SimpleFM\ZF2\Entity\EntityInterface::serialize()
      */
     public function serialize()
     {
-        $simpleFMAdapterRow["-recid"]       = $this->getRecid();
-        $simpleFMAdapterRow["-modid"]       = $this->getModid();
-        $simpleFMAdapterRow["Task Name"]    = $this->getTaskName();
-        $simpleFMAdapterRow["Description"]  = $this->getDescription();
-        $simpleFMAdapterRow["Tag"]          = $this->getTag();
+        $this->simpleFMAdapterRow = array();
+        
+        $this->mapPropertyOntoFmField('-recid', 'getRecid');
+        $this->mapPropertyOntoFmField('-modid', 'getModid');
+        $this->mapPropertyOntoFmField('Task Name', 'getTaskName');
+        $this->mapPropertyOntoFmField('Description', 'getDescription');
+        $this->mapPropertyOntoFmField('Tag', 'getTag');
     
-        return $simpleFMAdapterRow;
+        return $this->simpleFMAdapterRow;
+    }
+
+    /**
+     * @see \Soliant\SimpleFM\ZF2\Entity\AbstractEntity::getName()
+     */
+    public function getName(){
+        return $this->getTaskName();
+    }
+
+	/**
+     * @return the $taskName
+     */
+    public function getTaskName ()
+    {
+        return $this->taskName;
     }
     
 	/**
@@ -252,7 +273,7 @@ class Task extends TaskPointer implements SerializableEntityInterface
         return $this->project;
     }
     
-    public static function getLayoutName()
+    public static function getDefaultWriteLayoutName()
     {
     	return 'Task';
     }

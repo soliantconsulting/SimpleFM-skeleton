@@ -90,12 +90,12 @@ return array(
                  */
                     'simple_fm' => 'Soliant\SimpleFM\ZF2\AdapterServiceFactory',
                     'gateway_project' => function ($sm) {
-                        $entity = '\Application\Entity\ProjectPointer';
+                        $entity = new \Application\Entity\Project();
                         $simpleFMAdapter = $sm->get('simple_fm');
                         return new \Application\Gateway\Project($sm, $entity, $simpleFMAdapter);
                     },
                     'gateway_task' => function ($sm) {
-                        $entity = '\Application\Entity\TaskPointer';
+                        $entity = new \Application\Entity\Task();
                         $simpleFMAdapter = $sm->get('simple_fm');
                         return new \Application\Gateway\Task($sm, $entity, $simpleFMAdapter);
                     },
