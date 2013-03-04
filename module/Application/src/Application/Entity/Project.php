@@ -212,6 +212,11 @@ class Project extends AbstractEntity
     {
         return 'Project';
     }
+    
+    public static function getDefaultControllerRouteSegment()
+    {
+        return 'project';
+    }
 
     
     

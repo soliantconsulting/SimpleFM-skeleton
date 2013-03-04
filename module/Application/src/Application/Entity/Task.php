@@ -276,6 +276,11 @@ class Task extends AbstractEntity
     {
         return 'Task';
     }
+    
+    public static function getDefaultControllerRouteSegment()
+    {
+        return 'task';
+    }
 
 }
 
