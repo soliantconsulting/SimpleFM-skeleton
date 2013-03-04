@@ -48,8 +48,8 @@ class Project extends AbstractEntity
      */
     public function unserialize()
     {
-    	parent::unserialize();
-    	
+        parent::unserialize();
+        
         $this->unserializeField('projectName', 'Project Name', TRUE);
         $this->unserializeField('description', 'Description', TRUE);
         $this->unserializeField('tag', 'Tag', TRUE);
@@ -90,7 +90,7 @@ class Project extends AbstractEntity
         return $this->getProjectName();
     }
 
-	/**
+    /**
      * @return the $projectName
      */
     public function getProjectName ()
@@ -98,7 +98,7 @@ class Project extends AbstractEntity
         return $this->projectName;
     }
 
-	/**
+    /**
      * @param array $projectName
      * @return \Application\Entity\Task
      */
@@ -108,7 +108,7 @@ class Project extends AbstractEntity
         return $this;
     }
 
-	/**
+    /**
      * @return the $description
      */
     public function getDescription ()
@@ -116,7 +116,7 @@ class Project extends AbstractEntity
         return $this->description;
     }
 
-	/**
+    /**
      * @param array $description
      * @return \Application\Entity\Task
      */
@@ -126,7 +126,7 @@ class Project extends AbstractEntity
         return $this;
     }
 
-	/**
+    /**
      * @return the $tag
      */
     public function getTag ()
@@ -134,7 +134,7 @@ class Project extends AbstractEntity
         return $this->tag;
     }
 
-	/**
+    /**
      * @param array $tag
      * @return \Application\Entity\Task
      */
@@ -144,7 +144,7 @@ class Project extends AbstractEntity
         return $this;
     }
 
-	/**
+    /**
      * @return the $startDate
      */
     public function getStartDate ()
@@ -152,7 +152,7 @@ class Project extends AbstractEntity
         return $this->startDate;
     }
 
-	/**
+    /**
      * @return the $dueDate
      */
     public function getDueDate ()
@@ -160,7 +160,7 @@ class Project extends AbstractEntity
         return $this->dueDate;
     }
 
-	/**
+    /**
      * @return the $daysRemaining
      */
     public function getDaysRemaining ()
@@ -168,7 +168,7 @@ class Project extends AbstractEntity
         return $this->daysRemaining;
     }
 
-	/**
+    /**
      * @return the $daysElapsed
      */
     public function getDaysElapsed ()
@@ -176,7 +176,7 @@ class Project extends AbstractEntity
         return $this->daysElapsed;
     }
 
-	/**
+    /**
      * @return the $statusOnScreen
      */
     public function getStatusOnScreen ()
@@ -184,7 +184,7 @@ class Project extends AbstractEntity
         return $this->statusOnScreen;
     }
 
-	/**
+    /**
      * @return the $createdBy
      */
     public function getCreatedBy ()
@@ -192,7 +192,7 @@ class Project extends AbstractEntity
         return $this->createdBy;
     }
 
-	/**
+    /**
      * @return the $projectCompletionProgressBar
      */
     public function getProjectCompletionProgressBar ()
@@ -200,7 +200,7 @@ class Project extends AbstractEntity
         return $this->projectCompletionProgressBar;
     }
 
-	/**
+    /**
      * @return the $tasks
      */
     public function getTasks ()
@@ -210,7 +210,7 @@ class Project extends AbstractEntity
     
     public static function getDefaultWriteLayoutName()
     {
-    	return 'Project';
+        return 'Project';
     }
 
     

@@ -57,8 +57,8 @@ class Task extends AbstractEntity
      */
     public function unserialize()
     {
-    	parent::unserialize();
-    	
+        parent::unserialize();
+        
         $this->unserializeField('taskName', 'Task Name', TRUE);
         $this->unserializeField('description', 'Description', TRUE);
         $this->unserializeField('tag', 'Tag', TRUE);
@@ -106,7 +106,7 @@ class Task extends AbstractEntity
         return $this->getTaskName();
     }
 
-	/**
+    /**
      * @return the $taskName
      */
     public function getTaskName ()
@@ -114,7 +114,7 @@ class Task extends AbstractEntity
         return $this->taskName;
     }
     
-	/**
+    /**
      * @param field_type $taskName
      * @return \Application\Entity\Task
      */
@@ -124,7 +124,7 @@ class Task extends AbstractEntity
         return $this;
     }
 
-	/**
+    /**
      * @return the $description
      */
     public function getDescription ()
@@ -132,7 +132,7 @@ class Task extends AbstractEntity
         return $this->description;
     }
 
-	/**
+    /**
      * @param field_type $description
      * @return \Application\Entity\Task
      */
@@ -142,7 +142,7 @@ class Task extends AbstractEntity
         return $this;
     }
 
-	/**
+    /**
      * @return the $tag
      */
     public function getTag ()
@@ -150,7 +150,7 @@ class Task extends AbstractEntity
         return $this->tag;
     }
 
-	/**
+    /**
      * @param field_type $tag
      * @return \Application\Entity\Task
      */
@@ -160,7 +160,7 @@ class Task extends AbstractEntity
         return $this;
     }
     
-	/**
+    /**
      * @return the $startDate
      */
     public function getStartDate ()
@@ -168,7 +168,7 @@ class Task extends AbstractEntity
         return $this->startDate;
     }
 
-	/**
+    /**
      * @return the $dueDate
      */
     public function getDueDate ()
@@ -176,7 +176,7 @@ class Task extends AbstractEntity
         return $this->dueDate;
     }
 
-	/**
+    /**
      * @return the $daysRemaining
      */
     public function getDaysRemaining ()
@@ -184,7 +184,7 @@ class Task extends AbstractEntity
         return $this->daysRemaining;
     }
 
-	/**
+    /**
      * @return the $daysElapsed
      */
     public function getDaysElapsed ()
@@ -192,7 +192,7 @@ class Task extends AbstractEntity
         return $this->daysElapsed;
     }
 
-	/**
+    /**
      * @return the $statusOnScreen
      */
     public function getStatusOnScreen ()
@@ -200,7 +200,7 @@ class Task extends AbstractEntity
         return $this->statusOnScreen;
     }
 
-	/**
+    /**
      * @return the $status
      */
     public function getStatus ()
@@ -208,7 +208,7 @@ class Task extends AbstractEntity
         return $this->status;
     }
 
-	/**
+    /**
      * @return the $priorityOnScreen
      */
     public function getPriorityOnScreen ()
@@ -216,7 +216,7 @@ class Task extends AbstractEntity
         return $this->priorityOnScreen;
     }
 
-	/**
+    /**
      * @return the $priority
      */
     public function getPriority ()
@@ -224,7 +224,7 @@ class Task extends AbstractEntity
         return $this->priority;
     }
 
-	/**
+    /**
      * @return the $taskCompletionPercentage
      */
     public function getTaskCompletionPercentage ()
@@ -232,7 +232,7 @@ class Task extends AbstractEntity
         return $this->taskCompletionPercentage;
     }
 
-	/**
+    /**
      * @return the $personnelName
      */
     public function getPersonnelName ()
@@ -240,7 +240,7 @@ class Task extends AbstractEntity
         return $this->personnelName;
     }
 
-	/**
+    /**
      * @return the $personnelEmail
      */
     public function getPersonnelEmail ()
@@ -248,7 +248,7 @@ class Task extends AbstractEntity
         return $this->personnelEmail;
     }
 
-	/**
+    /**
      * @return the $personnelPhone
      */
     public function getPersonnelPhone ()
@@ -256,7 +256,7 @@ class Task extends AbstractEntity
         return $this->personnelPhone;
     }
 
-	/**
+    /**
      * @return the $createdBy
      */
     public function getCreatedBy ()
@@ -264,7 +264,7 @@ class Task extends AbstractEntity
         return $this->createdBy;
     }
 
-	/**
+    /**
      * @return the $project
      */
     public function getProject ()
@@ -274,7 +274,7 @@ class Task extends AbstractEntity
     
     public static function getDefaultWriteLayoutName()
     {
-    	return 'Task';
+        return 'Task';
     }
 
 }
