@@ -48,8 +48,8 @@ class Project extends AbstractEntity
      */
     public function unserialize()
     {
-        $this->unserializeField('recid', 'recid');
-        $this->unserializeField('modid', 'modid');
+    	parent::unserialize();
+    	
         $this->unserializeField('projectName', 'Project Name', TRUE);
         $this->unserializeField('description', 'Description', TRUE);
         $this->unserializeField('tag', 'Tag', TRUE);
@@ -77,10 +77,8 @@ class Project extends AbstractEntity
      */
     public function serialize()
     {
-        $this->simpleFMAdapterRow = array();
+        parent::serialize();
         
-        $this->serializeField('-recid', 'getRecid');
-        $this->serializeField('-modid', 'getModid');
         $this->serializeField('Project Name', 'getProjectName');
         $this->serializeField('Description', 'getDescription');
         $this->serializeField('Tag', 'getTag');

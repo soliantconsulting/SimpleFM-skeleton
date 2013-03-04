@@ -57,8 +57,8 @@ class Task extends AbstractEntity
      */
     public function unserialize()
     {
-        $this->unserializeField('recid', 'recid');
-        $this->unserializeField('modid', 'modid');
+    	parent::unserialize();
+    	
         $this->unserializeField('taskName', 'Task Name', TRUE);
         $this->unserializeField('description', 'Description', TRUE);
         $this->unserializeField('tag', 'Tag', TRUE);
@@ -90,10 +90,8 @@ class Task extends AbstractEntity
      */
     public function serialize()
     {
-        $this->simpleFMAdapterRow = array();
+        parent::serialize();
         
-        $this->serializeField('-recid', 'getRecid');
-        $this->serializeField('-modid', 'getModid');
         $this->serializeField('Task Name', 'getTaskName');
         $this->serializeField('Description', 'getDescription');
         $this->serializeField('Tag', 'getTag');
