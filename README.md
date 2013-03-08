@@ -4,11 +4,15 @@
 
 This application demonstrates use of the [SimpleFM][10]\ZF2 package as the Model layer of a Zend Framework 2 MVC application, using the FileMaker Server 12 FMServer_Sample database as a data provider.
 
+## NEW!
+
+This version adds a demonstration of the SimpleFM implementation of Zend\Authentication which shows best practices for handling user authentication against a FileMaker system. See section below for details.
+
 ## System Requirements
 
 [SimpleFM][10], the examples and this documentation are tailored for PHP 5.3 and FileMaker Sever 12
 
-* PHP 5.3+
+* PHP 5.3.3+
 * FileMaker Server 12+
 
 With minimum effort, you could get them to work with PHP 5.0 (requires SimpleXML) and any version of FileMaker server that uses fmresultset.xml grammar, however, backward compatibility is not maintained.
@@ -33,6 +37,10 @@ After completing these steps successfully, when you visit your vhost in a browse
 ### Dedicated FileMaker Web API File
 
 When designing a FileMaker Web API, it is recommended that you use a dedicated FileMaker Web interface file that contains *references* to your main solution, but contains no data of its own. This allows you to clearly separate the Web Layouts and Table Occurrences (TOs) from the FileMaker Pro Layouts and TOs. If you have FileMaker scripts in the main solution that need to be called from your Web application, make wrapper scripts in the Web interface file to maintain a crisp separation of concerns. Maintaining a strict decoupling of your Web API may take a little bit of extra effort in some cases, but is an important best practice.
+
+### Authentication Module
+
+The example file includes a demonstration of using the EVENT_DISPATCH event to check the session for a valid user identity before a controller renders anything for the user. It also contains an example of using Zend\Form and a SimpleFM Identity class to make authentication very simple to add to any ZF2 project.
 
 ### MVC (Model View Controller)
 
