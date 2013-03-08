@@ -9,8 +9,8 @@
         {"name": "Jeremiah Small", "email": "jsmall@soliantconsulting.com"}
     ],
     "require": {
-        "php": ">=5.3.0",
-        "soliantconsulting/simplefm": "dev-master",
+        "php": ">=5.3.3",
+        "soliantconsulting/simplefm": ">=2.0.0beta4",
         "zendframework/zendframework": "2.1.2"
     }
 }

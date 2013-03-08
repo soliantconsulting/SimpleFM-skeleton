@@ -18,4 +18,25 @@ return array(
         'username' => 'Admin',
         'password' => ''
     ),
+    'sfm_auth' => array(
+        'simple_fm_host_params' => array(
+            'hostname' => 'localhost',
+            'dbname'   => 'FMServer_Sample_Web',
+        ),
+        'sfm_login_route' => '/login',
+        'sfm_logout_route' => '/logout',
+        'sfm_session_namespace' => 'SimpleFM',
+        'sfm_exempt_controllers' => array(
+            'Application\Controller\LoginController',
+            'Application\Controller\LogoutController',
+        ),
+        'sfm_auth_params' => array(
+            'loginUrl'      => '/login',
+            'encryptionKey' => '56cb36c21eb9a29c1317092b973a5f9cba393a367de783af45a2799f7304092c',
+            'appUsername'   => '',
+            'appPassword'   => '',
+            'identityLayout' => 'Personnel',
+            'accountNameField' => 'Email',
+        ),
+    ),
 );

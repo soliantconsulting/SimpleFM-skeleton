@@ -1,4 +1,4 @@
-<?php echo $this->doctype(); ?>
+    <?php echo $this->doctype(); ?>
 
 <html lang="en">
   <head>
@@ -34,8 +34,16 @@
           <div class="nav-collapse">
             <ul class="nav">
               <li><a href="<?php echo $this->url('home'); ?>">Home</a></li>
-              <li><a href="/application/project">Projects</a></li>
-              <li><a href="/application/task">Tasks</a></li>
+              <li><a href="/project">Projects</a></li>
+              <li><a href="/task">Tasks</a></li>
+                <?php
+                    $authUser = $this->authenticatedUser;
+                    if (!empty($authUser)) {
+                        echo '<li><a href="/logout">Logged in as ' . $authUser->PERSONNEL_NAME_MATCH_FIELD . ' | Logout</a></li>';
+                    } else {
+                        echo '<li><a href="/login">Login</a></li>';
+                    }
+                ?>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -49,7 +57,7 @@
       <hr>
 
       <footer>
-        <p>&copy; 2005 - 2012 by Soliant Consulting, Inc. All rights reserved.</p>
+        <p>&copy; 2005 - 2013 by Soliant Consulting, Inc. All rights reserved.</p>
       </footer>
 
     </div> <!-- /container -->

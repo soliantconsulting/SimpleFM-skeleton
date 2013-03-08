@@ -5,9 +5,13 @@
             <tr><th width="40px">Recid</th><th>Name</th></tr>
             <?php 
             foreach ($this->projects as $project){
-                echo '<tr><td>' . $project->getRecid() . '</td><td><a href="/application/project/detail?recid=' . $project->getRecid() . '">' . $project->getName() . '</a></td></tr>';
+                echo '<tr><td>' . $project->getRecid() . '</td><td><a href="/project/detail?recid=' . $project->getRecid() . '">' . $project->getName() . '</a></td></tr>';
             }
             ?>
         </table>
     </div>
 </div>
+<hr>
+<?php \Zend\Debug\Debug::dump($this->sparseProject, 'Sparse Project Example From First Position in List'); ?>
+<hr>
+<?php \Zend\Debug\Debug::dump($this->fullProject, 'Resolved Full Project Example');

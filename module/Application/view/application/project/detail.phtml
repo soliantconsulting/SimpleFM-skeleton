@@ -30,7 +30,7 @@
         <table>
             <?php 
                 foreach ($this->project->getTasks() as $task){
-                    echo '<tr><td><a href="/application/task/detail?recid=' . 
+                    echo '<tr><td><a href="/task/detail?recid=' . 
                         $task->getRecid() . '">' . $task->getName() . '</a></td></tr>';
                 }
             ?>
