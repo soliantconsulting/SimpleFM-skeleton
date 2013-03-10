@@ -115,12 +115,12 @@ class Module implements EventManagerAwareInterface
                     $config = $sm->get('config');
                     $authConfig = $config['sfm_auth']['sfm_auth_params'];
                     $validateSimpleFmAdapter = $sm->get('sfm_validation_adapter');
-                    return new \Soliant\SimpleFM\ZF2\Authentication\Adapter\Auth($authConfig, $validateSimpleFmAdapter);
+                    return new \Soliant\SimpleFM\ZF2\Authentication\Adapter\SimpleFM($authConfig, $validateSimpleFmAdapter);
                 },
                 'sfm_auth_storage' => function ($sm) {
                     $config = $sm->get('config');
                     $namespace = $config['sfm_auth']['sfm_session_namespace'];
-                    return new \Zend\Authentication\Storage\Session($namespace);
+                    return new \Soliant\SimpleFM\ZF2\Authentication\Storage\Session($namespace);
                 },
                 'sfm_auth_service' => function ($sm) {
                     $storage = $sm->get('sfm_auth_storage');
