@@ -31,7 +31,6 @@ return array(
             'Application\Controller\LogoutController',
         ),
         'sfm_auth_params' => array(
-            'loginUrl'      => '/login',
             'encryptionKey' => '56cb36c21eb9a29c1317092b973a5f9cba393a367de783af45a2799f7304092c',
             'appUsername'   => '',
             'appPassword'   => '',
