@@ -27,13 +27,13 @@ class LoginController extends AbstractActionController
         $result = $adapter->setLayoutname('Project')->execute();
         
         if ($result['error'] === 0){
-            $messages = $adapter->getDbname() . ' is hosted on ' . $adapter->getHostname() . '.';
+            $installMessages = $adapter->getDbname() . ' is hosted on ' . $adapter->getHostname() . '.';
             $serverIsOnline = TRUE;
         } else {
-            $messages[] = 'Error Type: '  . $result['errortype'];
-            $messages[] = 'Error Code: '  . $result['error'];
-            $messages[] = 'Error Text: '  . $result['errortext'];
-            $messages[] = 'Adapter URL: ' . $result['url'];
+            $installMessages[] = 'Error Type: '  . $result['errortype'];
+            $installMessages[] = 'Error Code: '  . $result['error'];
+            $installMessages[] = 'Error Text: '  . $result['errortext'];
+            $installMessages[] = 'Adapter URL: ' . $result['url'];
             $serverIsOnline = FALSE;
         }
         
@@ -44,7 +44,8 @@ class LoginController extends AbstractActionController
             return $this->redirect()->toRoute('home');
         }
         
-        $form       = $this->getForm();
+        $form        = $this->getForm();
+        $messages = array();
         
         $request = $this->getRequest();
         
@@ -63,8 +64,9 @@ class LoginController extends AbstractActionController
                  
                 foreach($result->getMessages() as $message)
                 {
-                    //save message temporary into flashmessenger
+                    //save messages into view messages and flashmessenger
                     if (is_string($message)){
+                        $messages[] = $message;
                         $this->flashmessenger()->addMessage($message);
                     }
                 }
@@ -85,10 +87,10 @@ class LoginController extends AbstractActionController
         }
         
         return array(
-                'form'      => $this->getForm(),
-                'messages'  => $this->flashmessenger()->getMessages(),
-                'installMessages' => $messages, 
-                'serverIsOnline' => $serverIsOnline,
+                'form'            => $form,
+                'messages'        => $messages,
+                'installMessages' => $installMessages, 
+                'serverIsOnline'  => $serverIsOnline,
         );
         
     }
