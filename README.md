@@ -6,7 +6,7 @@ This application demonstrates use of the [SimpleFM][10]\ZF2 package as the Model
 
 ## NEW!
 
-This version adds a demonstration of the SimpleFM implementation of Zend\Authentication which shows best practices for handling user authentication against a FileMaker system. See section below for details.
+This version adds a demonstration of the SimpleFM implementation of Zend\Authentication which shows best practices for handling user authentication against a FileMaker system. See Authentication Module section below for details.
 
 ## System Requirements
 
@@ -15,20 +15,19 @@ This version adds a demonstration of the SimpleFM implementation of Zend\Authent
 * PHP 5.3.3+
 * FileMaker Server 12+
 
-With minimum effort, you could get them to work with PHP 5.0 (requires SimpleXML) and any version of FileMaker server that uses fmresultset.xml grammar, however, backward compatibility is not maintained.
+With minimum effort, you might be able to get them to work with PHP 5.0 (requires SimpleXML) and any version of FileMaker server that uses fmresultset.xml grammar, however, this is not recommended.
 
 ## License
 
-SimpleFM is free for commercial and non-commercial use, licensed under the business-friendly standard MIT license.
+SimpleFM is free for commercial and non-commercial use, licensed under the business-friendly [standard MIT license][12].
 
 ## Basic Setup Instructions
 
 1. Setup a project directory in your development environment with /public defined as a vhost.
-2. Git clone https://github.com/soliantconsulting/SimpleFM_FMServer_Sample.git in your project directory.
-3. Upload FMServer_Sample_Web.fmp12 to a FileMaker Server 12. See /documentation/README.md for details.
-4. Copy /public/.htaccess.dist as /public/.htaccess.
-5. Copy /config/autoload/local.php.dist as /config/autoload/local.php and edit hostname as needed.
-6. In your project directory, run `sudo ./composer.phar install` on the command line. See [getcomposer.org][9] for details
+1. Fork SimpleFM_FMServer_Sample and clone it into your project directory.
+1. Upload `FMServer_Sample_Web.fmp12` to a FileMaker Server 12 host. See [/documentation/README.md][11] for details.
+1. Copy `/config/autoload/local.php.dist` as `/config/autoload/local.php` and edit hostname as needed if not using localhost.
+1. In your project directory, run `sudo ./composer.phar install` on the command line. See [getcomposer.org][9] for details
 
 After completing these steps successfully, when you visit your vhost in a browser, you should see a success message if everying installed correctly.
 
@@ -40,7 +39,7 @@ When designing a FileMaker Web API, it is recommended that you use a dedicated F
 
 ### Authentication Module
 
-The example file includes a demonstration of using the EVENT_DISPATCH event to check the session for a valid user identity before a controller renders anything for the user. It also contains an example of using Zend\Form and a SimpleFM Identity class to make authentication very simple to add to any ZF2 project.
+This example includes a demonstration of using the dispatch event to check the session for a valid user identity *before* a controller can render anything for the user, without having to to make the controllers aware of the Authentication module. It also contains an example of Zend\Form and the SimpleFM Identity class to make authentication very easy to bolt on to any ZF2 project.
 
 ### MVC (Model View Controller)
 
@@ -58,7 +57,7 @@ MVC is important, but it is ZF2's powerful new DependencyInjection (Di) containe
 
 In a Web application that will use the FileMaker XML API, the architect needs to define Web domain objects that represent the FileMaker domain model as defined in the FileMaker Relationship Graph. In Doctrine ORM, [domain objects are referred to as Entities][4], and we will borrow that term here. Defining an Entity for each table allows you to cast your FileMaker data as objects with specific associations to each other that follow the domain associations defined in the FileMaker Relationship Graph. If you don't develop a domain model on the PHP side, you will be forced to juggle untyped arrays of strings that have no inherent associations with each other. This may be fine for very simple Web applications, but the initial investment in setting up your model is fairly low, so even for small projects it is probably worth while. Managing the domain model on the PHP side also allows you to cast your Entity properties. For example, you can cast object properties as dates, numbers, collections, etc.
 
-#### Domain Objects (Entity)
+#### Domain Objects (Entities)
 
 Generally you will define one Entity per FileMaker table, but the FileMaker XML API does not give us direct access to tables. Instead we use Layouts in a manner roughly analogous to SQL views and, properly used, they can be used as Gateways to the domain model in FileMaker. For example, consider Project and Task from FMServer_Sample:
 
@@ -91,22 +90,22 @@ Generally you will define one Entity per FileMaker table, but the FileMaker XML 
          */
     }
 
-#### Table Data Gateways (Gateway)
-
-Designate a FileMaker Layout for each Entity in your PHP domain model. A Table Data Gateway class (hereafter just Gateway) links an Entity to the Layout that each owns. Additional Layouts may be defined for an entity (see next section), but a minimum of one is required by the `AbstractEntity::getDefaultWriteLayoutName()` abstract static method.
-
-Example: given a *Person* table in FileMaker, define a Layout for the PersonGateway: *Person*
-
-    public static function getDefaultWriteLayoutName()
-    {
-    	return 'Project';
-    }
+#### Table Data Gateways (Gateways)
 
 > Table Data Gateway: An object that acts as a [Gateway][8] to a database table. One instance handles all the rows in the table. ([Fowler, PoEAA, TableDataGateway][6]).
 
-In the Project example shown below, additional library dependencies are assumed to be defined in `Soliant\SimpleFM\ZF2\Gateway\AbstractGateway`. The constructor requires an instance of `Zend\ServiceManager`, `Soliant\SimpleFM\ZF2\Entity\AbstractEntity`, `Soliant\SimpleFM\Adapter`, injected via a factory closure in the service_manager section of module.config.php. `AbstractGateway` also uses `Doctrine\Common\Collections\ArrayCollection`. These dependencies and several helper methods are not shown in the example for clarity.
+Designate a FileMaker Layout for each Entity in your PHP domain model. A Table Data Gateway class (hereafter just Gateway) links an Entity to the Layout(s) that provide access to the Table. Additional Layouts may be defined for an entity (see next section), but a minimum of one is required by the `AbstractEntity::getDefaultWriteLayoutName()` abstract static method.
 
-In addition to the dependencies, `AbstractGateway` provides all the basic database interaction methods shown here. They are included as methods of `Application\Gateway\Project` to illustrate the main point of a Gateway. When you implement the domain model for a Gateway, use the methods provided by `AbstractGateway` as-is or override any of them with custom domain logic. And of course you can create any new methods needed to support your domain model. The point is to encapsulate the inner workings of the FileMaker API in your Gateway classes, and let your ZF2 application focus only on the OO methods it needs to work with Entities.
+Example: given a *Person* Table in FileMaker, define the default layout for the PersonGateway:
+
+    public static function getDefaultWriteLayoutName()
+    {
+    	return 'Person';
+    }
+
+In the Project example shown here, additional library dependencies are assumed to be defined in `AbstractGateway`.[^1] These dependencies and several helper methods are omitted from the example for clarity.
+
+`AbstractGateway` provides all the basic database interaction methods shown here. They are shown as methods of `Application\Gateway\Project` to illustrate the main point of a Gateway. When you implement the domain model for a Gateway, use the methods provided by `AbstractGateway` as-is or override any of them with your own custom logic, and create any additional custom methods needed to support your domain model. The point is to encapsulate the inner workings of the FileMaker API in your Gateway classes, and let your ZF2 application focus only on the OO methods it needs to work with Entities. There should be no direct use of FileMaker API commands outside of the Gateway classes.
 
     <?php
     
@@ -159,17 +158,18 @@ In addition to the dependencies, `AbstractGateway` provides all the basic databa
 
 #### Optimizing Gateway Requests With Custom FileMaker Layouts
 
-Data from all the fields included on a Filemaker Layout are always returned when the Layout is called by the API. As there is no programatic way to modify which columns are returned, short of changing Layouts. You don't want to be forced to eagerly load the whole object in all circumstances. It can be useful to maintain one or more alternate layouts that are sub or super sets of the default fields that comprise an Entity class. For example you might define an EntityPointer Layout which contains the minimum properties required to identify an Entity, e.g. name, and primary key, and can be used when lazy loading is preferable. As the EntityPointer is an incomplete representation of the Entity, any instance retrieved with it must be treated as read-only, and the AbstractGateway (see previous section) provides a method for resolving the Entity from a non-standard Layout resonse. For instance, if you specify the EntityPointer Layout to generate a list view, you can pass an Entity instance from that collection to the resolveEntity() method on the EntityGateway, and it will make a request for that entity and return it with a complete field set:
+Data from all the fields included on a Filemaker Layout are always returned when the Layout is called by the API. There is no programatic way to modify which columns are returned, short of using a different Layout. You don't want to be forced to eagerly load the whole object in all circumstances. It can be useful to maintain one or more alternate layouts that are sub or super sets of the default fields that comprise an Entity class. For example you might define an EntityList Layout which contains the minimum properties required to identify an Entity, e.g. name, and primary key, and can be used when lazy loading is preferable. As the EntityList is an incomplete representation of the Entity, any instance retrieved with it must be treated as read-only, and the AbstractGateway provides a method for resolving the Entity from an incomplete Layout. For instance, if you specify the EntityList Layout to generate a list view, you can pass a sparse Entity instance from that collection to the resolveEntity() method on the EntityGateway, and it will make a request for that entity and return it with a serializable field set:
 
-        // retrieve the gateway and specify a stripped down Pointer layout
+        // retrieve the gateway and specify a sparse layout
         $gatewayProject = $this->getServiceLocator()->get('gateway_project');
-        $gatewayProject->setEntityLayout('ProjectPointer');
+        $gatewayProject->setEntityLayout('ProjectList');
         
         // execute the request
         $projects = $gatewayProject->findAll();
         
-        // pick one of the result records and "inflate" just that record with a second request
-        $fullProject = $gatewayProject->resolveEntity($projects[500][recid], 'Project');
+        // pick one of the result records and resolve just that record with a second request on a full layout
+        $sparseProject = $projects[0];
+        $fullProject = $gatewayProject->resolveEntity($sparseProject, 'Project');
 
 [1]: http://www.soliantconsulting.com
 [2]: http://www.filemaker.com/products/filemaker-server/
@@ -179,3 +179,9 @@ Data from all the fields included on a Filemaker Layout are always returned when
 [8]: http://martinfowler.com/eaaCatalog/gateway.html
 [9]: http://getcomposer.org
 [10]: https://github.com/soliantconsulting/SimpleFM
+[11]: https://github.com/soliantconsulting/SimpleFM_FMServer_Sample/blob/master/documentation/README.md
+[12]: https://github.com/soliantconsulting/SimpleFM_FMServer_Sample/blob/master/LICENSE.txt
+
+Footnotes
+
+[^1]: The constructor requires an instance of `Zend\ServiceManager`, `Soliant\SimpleFM\ZF2\Entity\AbstractEntity`, `Soliant\SimpleFM\Adapter`, injected via a factory closure in the service_manager section of module.config.php. `AbstractGateway` also uses `Doctrine\Common\Collections\ArrayCollection`.

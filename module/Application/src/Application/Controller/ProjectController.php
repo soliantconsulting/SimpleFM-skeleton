@@ -21,7 +21,7 @@ class ProjectController extends AbstractActionController
          * This example demonstrates use of gateway resolveEntity() to resolve a sparse entity into a full entity
          */
         $sparseProject = $projects[0];
-        $fullProject = $gatewayProject->resolveEntity($projects[0], 'Project');
+        $fullProject = $gatewayProject->resolveEntity($sparseProject, 'Project');
         
         return new ViewModel(array('projects' => $projects, 'sparseProject' => $sparseProject, 'fullProject' => $fullProject));
     }
