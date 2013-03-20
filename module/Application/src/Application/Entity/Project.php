@@ -36,10 +36,10 @@ class Project extends AbstractEntity
      */
     protected $tasks;
 
-    public function __construct($simpleFMAdapterRow = array())
+    public function __construct($fieldMap, $simpleFMAdapterRow = array())
     {
         $this->tasks = new ArrayCollection();
-        parent::__construct($simpleFMAdapterRow);
+        parent::__construct($fieldMap, $simpleFMAdapterRow);
     }
 
     /**
@@ -49,41 +49,14 @@ class Project extends AbstractEntity
     public function unserialize()
     {
         parent::unserialize();
-        
-        $this->unserializeField('projectName', 'Project Name', TRUE);
-        $this->unserializeField('description', 'Description', TRUE);
-        $this->unserializeField('tag', 'Tag', TRUE);
-        
-        $this->unserializeField('id', 'PROJECT ID MATCH FIELD');
-        $this->unserializeField('startDate', 'Start Date');
-        $this->unserializeField('dueDate', 'Due Date');
-        $this->unserializeField('daysRemaining', 'Days Remaining');
-        $this->unserializeField('daysElapsed', 'Days Elapsed');
-        $this->unserializeField('statusOnScreen', 'Status on Screen');
-        $this->unserializeField('createdBy', 'Created By');
 
         if (!empty($this->simpleFMAdapterRow["Tasks"]["rows"])){
             foreach ($this->simpleFMAdapterRow["Tasks"]["rows"] as $row){
-                $this->tasks->add(new Task($row));
+                $this->tasks->add(new Task($this->fieldMap, $row));
             }
         }
 
         return $this;
-    }
-    
-    /**
-     * @see \Soliant\SimpleFM\ZF2\Entity\AbstractEntity::serialize()
-     * @return the $simpleFMAdapterRow
-     */
-    public function serialize()
-    {
-        parent::serialize();
-        
-        $this->serializeField('Project Name', 'getProjectName');
-        $this->serializeField('Description', 'getDescription');
-        $this->serializeField('Tag', 'getTag');
-    
-        return $this->simpleFMAdapterRow;
     }
 
     public function getName(){

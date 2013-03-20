@@ -46,9 +46,9 @@ class Task extends AbstractEntity
     /**
      * @param array $simpleFMAdapterRow
      */
-    public function __construct($simpleFMAdapterRow = array())
+    public function __construct($fieldMap, $simpleFMAdapterRow = array())
     {
-        parent::__construct($simpleFMAdapterRow);
+        parent::__construct($fieldMap, $simpleFMAdapterRow);
     }
 
     /**
@@ -58,45 +58,12 @@ class Task extends AbstractEntity
     public function unserialize()
     {
         parent::unserialize();
-        
-        $this->unserializeField('taskName', 'Task Name', TRUE);
-        $this->unserializeField('description', 'Description', TRUE);
-        $this->unserializeField('tag', 'Tag', TRUE);
-
-        $this->unserializeField('id', 'TASK ID MATCH FIELD');
-        $this->unserializeField('startDate', 'Start Date');
-        $this->unserializeField('dueDate', 'Due Date');
-        $this->unserializeField('daysRemaining', 'Days Remaining');
-        $this->unserializeField('daysElapsed', 'Days Elapsed');
-        $this->unserializeField('status', 'Status');
-        $this->unserializeField('statusOnScreen', 'Status on Screen');
-        $this->unserializeField('priority', 'Priority Number List');
-        $this->unserializeField('priorityOnScreen', 'Priority on Screen');
-        $this->unserializeField('taskCompletionPercentage', 'Task Completion Percentage');
-        $this->unserializeField('createdBy', 'Created By');
-        $this->unserializeField('personnelName', 'PERSONNEL NAME MATCH FIELD');
-        $this->unserializeField('personnelEmail', 'Personnel::Email');
-        $this->unserializeField('personnelPhone', 'Personnel::Phone');
 
         if (!empty($this->simpleFMAdapterRow["Projects"]["rows"])){
-            $this->project = new Project($this->simpleFMAdapterRow["Projects"]["rows"][0]);
+            $this->project = new Project($this->fieldMap, $this->simpleFMAdapterRow["Projects"]["rows"][0]);
         }
 
         return $this;
-    }
-    
-    /**
-     * @see \Soliant\SimpleFM\ZF2\Entity\AbstractEntity::serialize()
-     */
-    public function serialize()
-    {
-        parent::serialize();
-        
-        $this->serializeField('Task Name', 'getTaskName');
-        $this->serializeField('Description', 'getDescription');
-        $this->serializeField('Tag', 'getTag');
-    
-        return $this->simpleFMAdapterRow;
     }
 
     /**
