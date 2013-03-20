@@ -7,8 +7,6 @@
 namespace Application\Gateway;
 
 use Soliant\SimpleFM\ZF2\Gateway\AbstractGateway;
-use Application\Entity\ProjectPointer;
-use Application\Entity\Project as ProjectEntity;
 
 class Project extends AbstractGateway
 {

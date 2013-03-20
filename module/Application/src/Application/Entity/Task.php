@@ -271,13 +271,13 @@ class Task extends AbstractEntity
     {
         return $this->project;
     }
-    
-    public static function getDefaultWriteLayoutName()
+
+    public function getDefaultWriteLayoutName()
     {
         return 'Task';
     }
-    
-    public static function getDefaultControllerRouteSegment()
+
+    public function getDefaultControllerRouteSegment()
     {
         return 'task';
     }
