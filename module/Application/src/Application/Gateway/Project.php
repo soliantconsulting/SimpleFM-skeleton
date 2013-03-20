@@ -14,15 +14,15 @@ class Project extends AbstractGateway
 {
 
     public function helloWorld() {
-        
+
         $project = $this->find(7676);
-        
+
         $project->setProjectName('Launch web site ' . $project->getModid())
             ->setDescription('myDescription')
             ->setTag('myTag');
-        
+
         return $this->edit($project);
-        
+
     }
 
 }

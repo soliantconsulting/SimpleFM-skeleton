@@ -12,14 +12,14 @@ use Application\Entity\Task;
 
 class Task extends AbstractEntity
 {
-    
+
     /**
      * Writable Fields
      */
     protected $taskName;
     protected $description;
     protected $tag;
-    
+
     /**
      * Read-only Fields
      */
@@ -50,7 +50,7 @@ class Task extends AbstractEntity
     {
         parent::__construct($simpleFMAdapterRow);
     }
-    
+
     /**
      * @param array $simpleFMAdapterRow
      * @see \Soliant\SimpleFM\ZF2\Entity\AbstractEntity::unserialize()
@@ -77,11 +77,11 @@ class Task extends AbstractEntity
         $this->unserializeField('personnelName', 'PERSONNEL NAME MATCH FIELD');
         $this->unserializeField('personnelEmail', 'Personnel::Email');
         $this->unserializeField('personnelPhone', 'Personnel::Phone');
-        
+
         if (!empty($this->simpleFMAdapterRow["Projects"]["rows"])){
             $this->project = new Project($this->simpleFMAdapterRow["Projects"]["rows"][0]);
         }
-        
+
         return $this;
     }
     
@@ -113,7 +113,7 @@ class Task extends AbstractEntity
     {
         return $this->taskName;
     }
-    
+
     /**
      * @param field_type $taskName
      * @return \Application\Entity\Task
@@ -159,7 +159,7 @@ class Task extends AbstractEntity
         $this->tag = $tag;
         return $this;
     }
-    
+
     /**
      * @return the $startDate
      */

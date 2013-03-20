@@ -12,14 +12,14 @@ use Application\Entity\Task;
 
 class Project extends AbstractEntity
 {
-    
+
     /**
      * Writable Fields
      */
     protected $projectName;
     protected $description;
     protected $tag;
-    
+
     /**
      * Read-only Fields
      */
@@ -41,7 +41,7 @@ class Project extends AbstractEntity
         $this->tasks = new ArrayCollection();
         parent::__construct($simpleFMAdapterRow);
     }
-    
+
     /**
      * @param array $simpleFMAdapterRow
      * @see \Soliant\SimpleFM\ZF2\Entity\AbstractEntity::unserialize()
@@ -61,13 +61,13 @@ class Project extends AbstractEntity
         $this->unserializeField('daysElapsed', 'Days Elapsed');
         $this->unserializeField('statusOnScreen', 'Status on Screen');
         $this->unserializeField('createdBy', 'Created By');
-        
+
         if (!empty($this->simpleFMAdapterRow["Tasks"]["rows"])){
             foreach ($this->simpleFMAdapterRow["Tasks"]["rows"] as $row){
                 $this->tasks->add(new Task($row));
             }
         }
-    
+
         return $this;
     }
     
@@ -218,8 +218,8 @@ class Project extends AbstractEntity
         return 'project';
     }
 
-    
-    
+
+
 
 }
 
