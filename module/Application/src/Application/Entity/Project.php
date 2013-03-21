@@ -36,10 +36,41 @@ class Project extends AbstractEntity
      */
     protected $tasks;
 
-    public function __construct($fieldMap, $simpleFMAdapterRow = array())
+    /**
+     * @see \Soliant\SimpleFM\ZF2\Entity\AbstractEntity::getFieldMapWriteable()
+     * @return array
+     */
+    public function getFieldMapWriteable()
+    {
+        $map = array(
+                'projectName'                  => 'Project Name',
+                'description'                  => 'Description',
+                'tag'                          => 'Tag',
+        );
+        return $map;
+    }
+
+    /**
+     * @see \Soliant\SimpleFM\ZF2\Entity\AbstractEntity::getFieldMapReadonly()
+     * @return array
+     */
+    public function getFieldMapReadonly(){
+        $map = array(
+                'id'                           => 'PROJECT ID MATCH FIELD',
+                'startDate'                    => 'Start Date',
+                'dueDate'                      => 'Due Date',
+                'daysRemaining'                => 'Days Remaining',
+                'daysElapsed'                  => 'Days Elapsed',
+                'statusOnScreen'               => 'Status on Screen',
+                'createdBy'                    => 'Created By',
+        );
+        return $map;
+    }
+
+    public function __construct($simpleFMAdapterRow = array())
     {
         $this->tasks = new ArrayCollection();
-        parent::__construct($fieldMap, $simpleFMAdapterRow);
+        parent::__construct($simpleFMAdapterRow);
     }
 
     /**
@@ -52,7 +83,7 @@ class Project extends AbstractEntity
 
         if (!empty($this->simpleFMAdapterRow["Tasks"]["rows"])){
             foreach ($this->simpleFMAdapterRow["Tasks"]["rows"] as $row){
-                $this->tasks->add(new Task($this->fieldMap, $row));
+                $this->tasks->add(new Task($row));
             }
         }
 

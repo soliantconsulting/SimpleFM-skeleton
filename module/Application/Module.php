@@ -52,18 +52,14 @@ class Module
                     return $dbAdapter;
                 },
                 'alternate_gateway_project' => function ($sm) {
-                    $config = $sm->get('config');
-                    $fieldMap = $config['sfm_field_map'];
-                    $entity = new \Application\Entity\Project($fieldMap);
+                    $entity = new \Application\Entity\Project();
                     $simpleFMAdapter = $sm->get('alternate_simple_fm');
-                    return new \Application\Gateway\Project($fieldMap, $entity, $simpleFMAdapter);
+                    return new \Application\Gateway\Project($entity, $simpleFMAdapter);
                 },
                 'alternate_gateway_task' => function ($sm) {
-                    $config = $sm->get('config');
-                    $fieldMap = $config['sfm_field_map'];
-                    $entity = new \Application\Entity\Task($fieldMap);
+                    $entity = new \Application\Entity\Task();
                     $simpleFMAdapter = $sm->get('alternate_simple_fm');
-                    return new \Application\Gateway\Task($fieldMap, $entity, $simpleFMAdapter);
+                    return new \Application\Gateway\Task($entity, $simpleFMAdapter);
                 },
             ),
         );

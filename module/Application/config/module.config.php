@@ -5,47 +5,6 @@
  */
 
 return array(
-    'sfm_field_map' => array(
-        'Application\Entity\Project' => array(
-            'writeable' => array(
-                'projectName'                  => 'Project Name',
-                'description'                  => 'Description',
-                'tag'                          => 'Tag',
-            ),
-            'readonly' => array(
-                'id'                           => 'PROJECT ID MATCH FIELD',
-                'startDate'                    => 'Start Date',
-                'dueDate'                      => 'Due Date',
-                'daysRemaining'                => 'Days Remaining',
-                'daysElapsed'                  => 'Days Elapsed',
-                'statusOnScreen'               => 'Status on Screen',
-                'createdBy'                    => 'Created By',
-            ),
-        ),
-        'Application\Entity\Task' => array(
-            'writeable' => array(
-                'taskName'                     => 'Task Name',
-                'description'                  => 'Description',
-                'tag'                          => 'Tag',
-            ),
-            'readonly' => array(
-                'id'                           => 'TASK ID MATCH FIELD',
-                'startDate'                    => 'Start Date',
-                'dueDate'                      => 'Due Date',
-                'daysRemaining'                => 'Days Remaining',
-                'daysElapsed'                  => 'Days Elapsed',
-                'status'                       => 'Status',
-                'statusOnScreen'               => 'Status on Screen',
-                'priority'                     => 'Priority Number List',
-                'priorityOnScreen'             => 'Priority on Screen',
-                'taskCompletionPercentage'     => 'Task Completion Percentage',
-                'createdBy'                    => 'Created By',
-                'personnelName'                => 'PERSONNEL NAME MATCH FIELD',
-                'personnelEmail'               => 'Personnel::Email',
-                'personnelPhone'               => 'Personnel::Phone',
-            ),
-        ),
-    ),
     'router' => array(
         'routes' => array(
             'home' => array(
@@ -134,17 +93,15 @@ return array(
                     'simple_fm' => 'Soliant\SimpleFM\ZF2\AdapterServiceFactory',
                     'gateway_project' => function ($sm) {
                         $config = $sm->get('config');
-                        $fieldMap = $config['sfm_field_map'];
-                        $entity = new \Application\Entity\Project($fieldMap);
+                        $entity = new \Application\Entity\Project();
                         $simpleFMAdapter = $sm->get('simple_fm');
-                        return new \Application\Gateway\Project($fieldMap, $entity, $simpleFMAdapter);
+                        return new \Application\Gateway\Project($entity, $simpleFMAdapter);
                     },
                     'gateway_task' => function ($sm) {
                         $config = $sm->get('config');
-                        $fieldMap = $config['sfm_field_map'];
-                        $entity = new \Application\Entity\Task($fieldMap);
+                        $entity = new \Application\Entity\Task();
                         $simpleFMAdapter = $sm->get('simple_fm');
-                        return new \Application\Gateway\Task($fieldMap, $entity, $simpleFMAdapter);
+                        return new \Application\Gateway\Task($entity, $simpleFMAdapter);
                     },
 
 

@@ -44,11 +44,49 @@ class Task extends AbstractEntity
     protected $project;
 
     /**
+     * @see \Soliant\SimpleFM\ZF2\Entity\AbstractEntity::getFieldMapWriteable()
+     * @return array
+     */
+    public function getFieldMapWriteable()
+    {
+        $map = array(
+                'taskName'                     => 'Task Name',
+                'description'                  => 'Description',
+                'tag'                          => 'Tag',
+        );
+        return $map;
+    }
+
+    /**
+     * @see \Soliant\SimpleFM\ZF2\Entity\AbstractEntity::getFieldMapReadonly()
+     * @return array
+     */
+    public function getFieldMapReadonly(){
+        $map = array(
+                'id'                           => 'TASK ID MATCH FIELD',
+                'startDate'                    => 'Start Date',
+                'dueDate'                      => 'Due Date',
+                'daysRemaining'                => 'Days Remaining',
+                'daysElapsed'                  => 'Days Elapsed',
+                'status'                       => 'Status',
+                'statusOnScreen'               => 'Status on Screen',
+                'priority'                     => 'Priority Number List',
+                'priorityOnScreen'             => 'Priority on Screen',
+                'taskCompletionPercentage'     => 'Task Completion Percentage',
+                'createdBy'                    => 'Created By',
+                'personnelName'                => 'PERSONNEL NAME MATCH FIELD',
+                'personnelEmail'               => 'Personnel::Email',
+                'personnelPhone'               => 'Personnel::Phone',
+        );
+        return $map;
+    }
+
+    /**
      * @param array $simpleFMAdapterRow
      */
-    public function __construct($fieldMap, $simpleFMAdapterRow = array())
+    public function __construct($simpleFMAdapterRow = array())
     {
-        parent::__construct($fieldMap, $simpleFMAdapterRow);
+        parent::__construct($simpleFMAdapterRow);
     }
 
     /**
@@ -60,7 +98,7 @@ class Task extends AbstractEntity
         parent::unserialize();
 
         if (!empty($this->simpleFMAdapterRow["Projects"]["rows"])){
-            $this->project = new Project($this->fieldMap, $this->simpleFMAdapterRow["Projects"]["rows"][0]);
+            $this->project = new Project($this->simpleFMAdapterRow["Projects"]["rows"][0]);
         }
 
         return $this;
