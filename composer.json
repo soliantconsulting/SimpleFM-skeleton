@@ -10,7 +10,7 @@
     ],
     "require": {
         "php": ">=5.3.3",
-        "soliantconsulting/simplefm": "2.0.0beta9",
+        "soliantconsulting/simplefm": "dev-master",
         "zendframework/zendframework": "2.2.1"
     }
 }
