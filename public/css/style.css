@@ -38,3 +38,8 @@ div.container a.brand {
 .form-group label {
 	width:150px;
 }
+
+.alert {
+	list-style:none;
+	margin-left:0;
+}

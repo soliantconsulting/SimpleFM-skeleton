@@ -27,6 +27,8 @@ class ProjectController extends AbstractActionController
     		$form->setData($request->getPost());
     		if ($form->isValid()){
     			$gatewayProject->create($project);
+    			$this->flashMessenger()->addSuccessMessage('Project added successfully.');
+    			$this->redirect()->toRoute('project');
     		}
     	}
     	

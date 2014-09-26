@@ -12,6 +12,7 @@
     </div>
 </div>
 <hr>
+<?php echo $this->flashMessenger()->render('success',array('alert','alert-success')); ?>
 <?php 
  $form = $this->addProject;
  $form->setAttributes(array(
