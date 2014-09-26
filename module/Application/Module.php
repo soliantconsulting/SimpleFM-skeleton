@@ -7,6 +7,7 @@
 namespace Application;
 
 use Zend\Mvc\ModuleRouteListener;
+use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
 
 class Module
 {
@@ -63,5 +64,18 @@ class Module
                 },
             ),
         );
+    }
+    
+    public function getFormElementConfig() {
+    	return array(
+    		'factories' => array(
+    			'add_project' => function($sm) {
+    				$form = new \Application\Form\AddProject();
+    				$form->setInputFilter(new \Application\Form\Filter\AddProject());
+    				$form->setHydrator(new ClassMethodsHydrator());
+    				return $form;
+    			},
+    		),
+    	);
     }
 }

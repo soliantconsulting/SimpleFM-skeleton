@@ -35,3 +35,6 @@ div.container a.brand {
  .soliant-yellow {
 	color: rgb(222, 179, 8);
  }
+.form-group label {
+	width:150px;
+}

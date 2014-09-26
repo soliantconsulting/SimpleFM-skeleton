@@ -12,6 +12,49 @@
     </div>
 </div>
 <hr>
+<?php 
+ $form = $this->addProject;
+ $form->setAttributes(array(
+        'action' => '/project',
+        'method' => 'post',
+        'role' => 'form',
+        'name' => 'add_project',
+        'id' => 'add-project',
+        'class' => 'form-inline'
+ )); 
+ $form->prepare(); 
+ echo $this->form()->openTag($form); ?>
+<div class="row">
+    <div class="span12">
+        <h3>Add New Project</h3>
+    </div>
+</div>
+<fieldset class="highlight">
+	<div class="row">
+		<div class="span12">
+	    	<div class="form-group">
+				<?php echo $this->formRow($form->get('project_name')); ?>
+	        </div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="span12">
+	    	<div class="form-group">
+				<?php echo $this->formRow($form->get('description')); ?>
+	        </div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="span12">
+	    	<div class="form-group">
+				<?php echo $this->formRow($form->get('tag')); ?>
+	        </div>
+		</div>
+	</div>
+</fieldset>
+<?php echo $this->formElement($form->get('submit')) ?>
+<?php echo $this->form()->closeTag() ?>
+<hr>
 <?php \Zend\Debug\Debug::dump($this->sparseProject, 'Sparse Project Example'); ?>
 <hr>
 <?php \Zend\Debug\Debug::dump($this->fullProject, 'Resolved Project Example');
