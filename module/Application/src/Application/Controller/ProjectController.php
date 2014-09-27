@@ -8,12 +8,30 @@ namespace Application\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use \Application\Entity\Project AS ProjectEntity;
 
 class ProjectController extends AbstractActionController
 {
     public function indexAction()
     {
-        $gatewayProject = $this->getServiceLocator()->get('gateway_project');
+    	$gatewayProject = $this->getServiceLocator()->get('gateway_project');
+    	
+    	$formManager = $this->serviceLocator->get('FormElementManager');
+    	$form = $formManager->get('add_project');
+    	
+    	$project = new ProjectEntity();
+    	$form->bind($project);
+
+    	$request = $this->getRequest();
+    	if ($request->isPost()) {
+    		$form->setData($request->getPost());
+    		if ($form->isValid()){
+    			$gatewayProject->create($project);
+    			$this->flashMessenger()->addSuccessMessage('Project added successfully.');
+    			$this->redirect()->toRoute('project');
+    		}
+    	}
+    	
         $gatewayProject->setEntityLayout('ProjectPointer');
         $projects = $gatewayProject->findAll();
         
@@ -23,7 +41,14 @@ class ProjectController extends AbstractActionController
         $sparseProject = $projects[0];
         $fullProject = $gatewayProject->resolveEntity($sparseProject, 'Project');
         
-        return new ViewModel(array('projects' => $projects, 'sparseProject' => $sparseProject, 'fullProject' => $fullProject));
+        return new ViewModel(
+        	array(
+        		'projects' => $projects, 
+        		'sparseProject' => $sparseProject, 
+        		'fullProject' => $fullProject,
+        		'addProject' => $form
+        	)
+        );
     }
 
     public function detailAction()

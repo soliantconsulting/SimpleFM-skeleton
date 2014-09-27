@@ -30,6 +30,7 @@ class Project extends AbstractEntity
     protected $daysElapsed;
     protected $statusOnScreen;
     protected $createdBy;
+    protected $projectCompletionProgressBar;
 
     /**
      * Child Associations
@@ -88,6 +89,10 @@ class Project extends AbstractEntity
         }
 
         return $this;
+    }
+    
+    public function getId() {
+    	return $this->id;
     }
 
     public function getName(){
