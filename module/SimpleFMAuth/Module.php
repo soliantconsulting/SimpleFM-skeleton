@@ -9,6 +9,7 @@ use Zend\EventManager\EventManager;
 use Zend\EventManager\EventManagerInterface;
 use Zend\EventManager\EventManagerAwareInterface;
 use Zend\Mvc\MvcEvent;
+use Soliant\SimpleFM\HostConnection;
 
 class Module implements EventManagerAwareInterface
 {
@@ -108,7 +109,14 @@ class Module implements EventManagerAwareInterface
                 'sfm_validation_adapter' => function ($sm) {
                     $config = $sm->get('config');
                     $hostParams = $config['sfm_auth']['simple_fm_host_params'];
-                    $dbAdapter = new \Soliant\SimpleFM\Adapter($hostParams);
+                    $dbAdapter = new \Soliant\SimpleFM\Adapter(
+                        new HostConnection(
+                            $hostParams['hostName'],
+                            $hostParams['dbName'],
+                            null,
+                            null
+                        )
+                    );
                     return $dbAdapter;
                 },
                 'sfm_auth_adapter' => function ($sm) {
