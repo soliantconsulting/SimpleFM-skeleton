@@ -6,6 +6,7 @@
 
 namespace Application;
 
+use Soliant\SimpleFM\HostConnection;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
 
@@ -49,7 +50,14 @@ class Module
                 'alternate_simple_fm' => function ($sm) {
                     $config = $sm->get('config');
                     $hostParams = $config['simple_fm_host_params'];
-                    $dbAdapter = new \Soliant\SimpleFM\Adapter($hostParams);
+                    $dbAdapter = new \Soliant\SimpleFM\Adapter(
+                        new HostConnection(
+                            $config['hostName'],
+                            $config['dbName'],
+                            $config['userName'],
+                            $config['password']
+                        )
+                    );
                     return $dbAdapter;
                 },
                 'alternate_gateway_project' => function ($sm) {

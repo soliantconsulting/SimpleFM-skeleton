@@ -10,6 +10,8 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Form\Annotation\AnnotationBuilder;
 use Zend\View\Model\ViewModel;
 use Soliant\SimpleFM\ZF2\Authentication\Mapper\Identity;
+use Soliant\SimpleFM\Adapter;
+use Soliant\SimpleFM\Result\FmResultSet;
 
 class LoginController extends AbstractActionController
 {
@@ -22,18 +24,20 @@ class LoginController extends AbstractActionController
     public function indexAction()
     {
         
-        
+        /** @var Adapter $adapter */
         $adapter = $this->getServiceLocator()->get('simple_fm');
+         /** @var FmResultSet $result */
         $result = $adapter->setLayoutname('Project')->execute();
         
-        if ($result['error'] === 0){
-            $installMessages = $adapter->getDbname() . ' is hosted on ' . $adapter->getHostname() . '.';
+        if ($result->getErrorCode() === 0){
+            $installMessages = $adapter->getHostConnection()->getDbName() .
+                ' is hosted on ' . $adapter->getHostConnection()->getHostName() . '.';
             $serverIsOnline = TRUE;
         } else {
-            $installMessages[] = 'Error Type: '  . $result['errortype'];
-            $installMessages[] = 'Error Code: '  . $result['error'];
-            $installMessages[] = 'Error Text: '  . $result['errortext'];
-            $installMessages[] = 'Adapter URL: ' . $result['url'];
+            $installMessages[] = 'Error Type: '  . $result->getErrorType();
+            $installMessages[] = 'Error Code: '  . $result->getErrorCode();
+            $installMessages[] = 'Error Text: '  . $result->getErrorMessage();
+            $installMessages[] = 'Adapter Debug URL: ' . $result->getDebugUrl();
             $serverIsOnline = FALSE;
         }
         

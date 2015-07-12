@@ -11,17 +11,21 @@
  * credentials from accidentally being comitted into version control.
  */
 
+// do not include outside of development
+error_reporting (E_ALL);
+ini_set('display_errors', '1');
+
 return array(
     'simple_fm_host_params' => array(
-        'hostname' => 'localhost',
-        'dbname'   => 'FMServer_Sample_Web',
-        'username' => 'Admin',
+        'hostName' => 'localhost',
+        'dbName'   => 'FMServer_Sample_Web',
+        'userName' => 'Admin',
         'password' => ''
     ),
     'sfm_auth' => array(
         'simple_fm_host_params' => array(
-            'hostname' => 'localhost',
-            'dbname'   => 'FMServer_Sample_Web',
+            'hostName' => 'localhost',
+            'dbName'   => 'FMServer_Sample_Web',
         ),
         'sfm_login_route' => '/login',
         'sfm_logout_route' => '/logout',

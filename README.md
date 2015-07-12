@@ -19,13 +19,74 @@ SimpleFM is free for commercial and non-commercial use, licensed under the busin
 
 ## Basic Setup Instructions
 
+### Installation Options
+
+#### Use Composer
+
+The easiest way to create a new ZF2 project is to use [Composer](https://getcomposer.org/). If you don't have it already installed, then please install as per the [documentation](https://getcomposer.org/doc/00-intro.md).
+
+Create your new ZF2 project:
+
+    composer create-project -n -sdev soliantconsulting/SimpleFM-skeleton path/to/install
+
+
+#### Download a tarball with a local Composer
+
+If you don't have composer installed globally then another way to create a new ZF2 project is to download the tarball and install it:
+
+1. Download the [tarball](https://github.com/soliantconsulting/SimpleFM-skeleton/tarball/master), extract it and then install the dependencies with a locally installed Composer:
+
+        cd my/project/dir
+        curl -#L https://github.com/soliantconsulting/SimpleFM-skeleton/tarball/master | tar xz --strip-components=1
+    
+
+2. Download composer into your proejct directory and install the dependencies:
+
+        curl -s https://getcomposer.org/installer | php
+        php composer.phar install
+
+If you don't have access to curl, then install Composer into your project as per the [documentation](https://getcomposer.org/doc/00-intro.md).
+
+
+### Local Development Web Server Setup Options
+
+#### PHP CLI server
+
+The simplest way to get started if you are using PHP 5.4 or above is to start the internal PHP cli-server in the root
+directory:
+
+    php -S 0.0.0.0:8080 -t public/ public/index.php
+
+This will start the cli-server on port 8080, and bind it to all network
+interfaces.
+
+**Note:** The built-in CLI server is *for development only*.
+
+#### Vagrant server
+
+This project supports a basic [Vagrant](http://docs.vagrantup.com/v2/getting-started/index.html) configuration with an inline shell provisioner to run the Skeleton Application in a [VirtualBox](https://www.virtualbox.org/wiki/Downloads).
+
+1. Run vagrant up command
+
+    vagrant up
+
+2. Visit [http://localhost:8085](http://localhost:8085) in your browser
+
+Look in [Vagrantfile](Vagrantfile) for configuration details.
+
+#### Host On Existing Web Server
+
+There are many web server options compatible with PHP 5.5+, including Apache, Nginx, and IIS. Setup of other options is beyond the scope of this documentation.
+
+
 1. Setup a project directory in your development environment with /public defined as a vhost.
-1. Fork SimpleFM_FMServer_Sample and clone it into your project directory.
+
+### Configuration Tasks
+
 1. Upload `FMServer_Sample_Web.fmp12` to a FileMaker Server 12 host. See [/documentation/README.md][11] for details.
 1. Copy `/config/autoload/local.php.dist` as `/config/autoload/local.php` and edit hostname as needed if not using localhost.
-1. In your project directory, run `sudo ./composer.phar install` on the command line. See [getcomposer.org][9] for details
 
-After completing these steps successfully, when you visit your vhost in a browser, you should see a success message if everying installed correctly.
+After completing these steps successfully, when you visit your vhost in a browser, you should see a success message if everything installed correctly.
 
 ## SimpleFM Best practices
 
