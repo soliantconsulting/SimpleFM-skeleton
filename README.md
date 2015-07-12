@@ -1,21 +1,17 @@
-# SimpleFM_FMServer_Sample
+# SimpleFM Skeleton
 
 ## About
 
-This application demonstrates use of the [SimpleFM][10]\ZF2 package as the Model layer of a Zend Framework 2 MVC application, using the FileMaker Server 12 FMServer_Sample database as a data provider.
-
-## NEW!
-
-This version adds a demonstration of the SimpleFM implementation of Zend\Authentication which shows best practices for handling user authentication against a FileMaker system. See Authentication Module section below for details.
+This application demonstrates use of the [SimpleFM][10]\ZF2 package in the Model layer of a Zend Framework 2 MVC application, using the FileMaker Server 14 FMServer_Sample database as a data provider.
 
 ## System Requirements
 
-[SimpleFM][10], the examples and this documentation are tailored for PHP 5.3 and FileMaker Sever 12
+[SimpleFM][10], the examples and this documentation are tailored for PHP 5.5+ and FileMaker Sever 14
 
-* PHP 5.3.3+
+* PHP 5.5+
 * FileMaker Server 12+
 
-With minimum effort, you might be able to get them to work with PHP 5.0 (requires SimpleXML) and any version of FileMaker server that uses fmresultset.xml grammar, however, this is not recommended.
+With minimum effort, it should work with any version of FileMaker server that uses fmresultset.xml grammar, however, this is not recommended.
 
 ## License
 
@@ -103,7 +99,7 @@ Example: given a *Person* Table in FileMaker, define the default layout for the 
     	return 'Person';
     }
 
-In the Project example shown here, additional library dependencies are assumed to be defined in `AbstractGateway`.[^1] These dependencies and several helper methods are omitted from the example for clarity.
+In the Project example shown here, additional library dependencies are assumed to be defined in `AbstractGateway`<sup>[1](#footnote1)</sup>. These dependencies and several helper methods are omitted from the example for clarity.
 
 `AbstractGateway` provides all the basic database interaction methods shown here. They are shown as methods of `Application\Gateway\Project` to illustrate the main point of a Gateway. When you implement the domain model for a Gateway, use the methods provided by `AbstractGateway` as-is or override any of them with your own custom logic, and create any additional custom methods needed to support your domain model. The point is to encapsulate the inner workings of the FileMaker API in your Gateway classes, and let your ZF2 application focus only on the OO methods it needs to work with Entities. There should be no direct use of FileMaker API commands outside of the Gateway classes.
 
@@ -179,9 +175,9 @@ Data from all the fields included on a Filemaker Layout are always returned when
 [8]: http://martinfowler.com/eaaCatalog/gateway.html
 [9]: http://getcomposer.org
 [10]: https://github.com/soliantconsulting/SimpleFM
-[11]: https://github.com/soliantconsulting/SimpleFM_FMServer_Sample/blob/master/documentation/README.md
-[12]: https://github.com/soliantconsulting/SimpleFM_FMServer_Sample/blob/master/LICENSE.txt
+[11]: https://github.com/soliantconsulting/SimpleFM-skeleton/blob/master/documentation/README.md
+[12]: https://github.com/soliantconsulting/SimpleFM-skeleton/blob/master/LICENSE.txt
 
 Footnotes
 
-[^1]: The constructor requires an instance of `Zend\ServiceManager`, `Soliant\SimpleFM\ZF2\Entity\AbstractEntity`, `Soliant\SimpleFM\Adapter`, injected via a factory closure in the service_manager section of module.config.php. `AbstractGateway` also uses `Doctrine\Common\Collections\ArrayCollection`.
+<a name="footnote1">1</a>: The constructor requires an instance of `Zend\ServiceManager`, `Soliant\SimpleFM\ZF2\Entity\AbstractEntity`, `Soliant\SimpleFM\Adapter`, injected via a factory closure in the service_manager section of module.config.php. `AbstractGateway` also uses `Doctrine\Common\Collections\ArrayCollection`.
