@@ -1,6 +1,6 @@
 <?php
 /**
- * SimpleFM_FMServer_Sample
+ * SimpleFM-skeleton
  * @author jsmall@soliantconsulting.com
  */
 
