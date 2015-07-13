@@ -68,7 +68,7 @@ This project supports a basic [Vagrant](http://docs.vagrantup.com/v2/getting-sta
 
 1. Run vagrant up command
 
-    vagrant up
+        vagrant up
 
 2. Visit [http://localhost:8085](http://localhost:8085) in your browser
 
