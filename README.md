@@ -239,6 +239,6 @@ Data from all the fields included on a Filemaker Layout are always returned when
 [11]: https://github.com/soliantconsulting/SimpleFM-skeleton/blob/master/documentation/README.md
 [12]: https://github.com/soliantconsulting/SimpleFM-skeleton/blob/master/LICENSE.txt
 
-Footnotes
+# Footnotes
 
-<a name="footnote1">1</a>: The constructor requires an instance of `Zend\ServiceManager`, `Soliant\SimpleFM\ZF2\Entity\AbstractEntity`, `Soliant\SimpleFM\Adapter`, injected via a factory closure in the service_manager section of module.config.php. `AbstractGateway` also uses `Doctrine\Common\Collections\ArrayCollection`.
+<a name="footnote1">1</a>: See [Soliant\SimpleFM\ZF2\Gateway\AbstractGateway](https://github.com/soliantconsulting/SimpleFM/blob/master/library/Soliant/SimpleFM/ZF2/Gateway/AbstractGateway.php) for complete details.
