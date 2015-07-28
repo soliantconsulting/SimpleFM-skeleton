@@ -11,6 +11,6 @@
     "require": {
         "php": ">=5.5",
         "soliantconsulting/simplefm": "dev-master",
-        "zendframework/zendframework": "~2.4"
+        "zendframework/zendframework": "~2.5"
     }
 }
