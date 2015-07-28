@@ -78,7 +78,6 @@ Look in [Vagrantfile](Vagrantfile) for configuration details.
 
 There are many web server options compatible with PHP 5.5+, including Apache, Nginx, and IIS. Setup of other options is beyond the scope of this documentation.
 
-
 1. Setup a project directory in your development environment with /public defined as a vhost.
 
 ### Configuration Tasks
