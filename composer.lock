@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a6d8d0ad3146b3e37527b6ee75f8f9f8",
+    "hash": "740e4fae8a4c94719af58b29f07fd1f1",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1308,16 +1308,16 @@
         },
         {
             "name": "soliantconsulting/simplefm",
-            "version": "dev-master",
+            "version": "3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/soliantconsulting/SimpleFM.git",
-                "reference": "07a13f5635ae4281029b3178f3190581ea689664"
+                "reference": "6489850c8683908d1d8fdc7d0f2cfae99549e05e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/soliantconsulting/SimpleFM/zipball/07a13f5635ae4281029b3178f3190581ea689664",
-                "reference": "07a13f5635ae4281029b3178f3190581ea689664",
+                "url": "https://api.github.com/repos/soliantconsulting/SimpleFM/zipball/6489850c8683908d1d8fdc7d0f2cfae99549e05e",
+                "reference": "6489850c8683908d1d8fdc7d0f2cfae99549e05e",
                 "shasum": ""
             },
             "require": {
@@ -1330,7 +1330,7 @@
                 "phpunit/phpunit": "4.7.*",
                 "phpunit/phpunit-skeleton-generator": "*",
                 "squizlabs/php_codesniffer": "2.*",
-                "zendframework/zendframework": "2.4.*"
+                "zendframework/zendframework": "~2.5"
             },
             "suggest": {
                 "zendframework/zendframework": "Required if you plan on using SimpleFM/ZF2 components."
@@ -1338,7 +1338,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.0.x-dev"
+                    "dev-master": "3.1.x-dev"
                 }
             },
             "autoload": {
@@ -1363,7 +1363,7 @@
                 "FileMaker",
                 "adapter"
             ],
-            "time": "2015-07-12 18:46:31"
+            "time": "2015-07-28 06:38:17"
         },
         {
             "name": "symfony/yaml",
@@ -4301,9 +4301,7 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "soliantconsulting/simplefm": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
